@@ -1,7 +1,7 @@
 
 import data.App_Settings;
 import data.SQLite_DBManager;
-import gui.W_Login;
+import gui.W_BankSelector;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -23,6 +23,9 @@ public class PED {
         
         App_Settings sysSettings = new App_Settings();
         
+        
+        
+        
 //        Thread t_statusBar = new Thread(new Runnable(){
 //            @Override
 //            public void run() {
@@ -32,7 +35,8 @@ public class PED {
 //            }
 //        });
         
-        W_Login w_Login = new W_Login(sysSettings);
+        W_BankSelector w_BankSelector = new W_BankSelector(sysSettings);
+        //W_Login w_Login = new W_Login(sysSettings);
         
         SQLite_DBManager dBManager = new SQLite_DBManager();
         dBManager.connectDB("Bank_Of_America.ped");

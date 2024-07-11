@@ -34,7 +34,7 @@ public class W_Login extends javax.swing.JFrame {
         
         
         pnl_StatusBar.showPanel(appSettings);
-        pnl_Login.showPanel("BG_Login.png");
+        pnl_Login.showPanel("BG1.png");
         
         repaint();
         revalidate();
@@ -54,12 +54,19 @@ public class W_Login extends javax.swing.JFrame {
 
         pnl_StatusBar = new presets.Pnl_StatusBar();
         pnl_Login = new presets.Custom_Panel();
+        p_container = new javax.swing.JPanel();
+        lbl_Title = new javax.swing.JLabel();
+        lbl_Username = new javax.swing.JLabel();
+        lbl_Password = new javax.swing.JLabel();
+        tf_Username = new presets.Custom_TextField();
+        tf_Password = new presets.Custom_PasswordField();
+        custom_Button1 = new presets.Custom_Button();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Sistema de registro");
         setMinimumSize(new java.awt.Dimension(600, 400));
         setName("Login"); // NOI18N
-        setPreferredSize(new java.awt.Dimension(600, 400));
+        setResizable(false);
         setSize(new java.awt.Dimension(0, 0));
         setType(java.awt.Window.Type.UTILITY);
 
@@ -69,9 +76,69 @@ public class W_Login extends javax.swing.JFrame {
         pnl_StatusBar.setPreferredSize(new java.awt.Dimension(600, 25));
         getContentPane().add(pnl_StatusBar, java.awt.BorderLayout.SOUTH);
 
-        pnl_Login.setMaximumSize(null);
-        pnl_Login.setMinimumSize(null);
-        pnl_Login.setPreferredSize(new java.awt.Dimension(600, 375));
+        pnl_Login.setPreferredSize(new java.awt.Dimension(975, 600));
+        pnl_Login.setLayout(new java.awt.BorderLayout());
+
+        p_container.setMaximumSize(null);
+        p_container.setMinimumSize(null);
+        p_container.setOpaque(false);
+        p_container.setPreferredSize(new java.awt.Dimension(500, 600));
+
+        lbl_Title.setFont(new java.awt.Font("Candara", 1, 24)); // NOI18N
+        lbl_Title.setForeground(new java.awt.Color(0, 204, 204));
+        lbl_Title.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbl_Title.setText("<html>   <div style=\"text-align: center; \">     <p style=\"text-shadow: 2px 2px 4px #aaa;\">Bienvenido al banco ###</p>     <p style=\"text-shadow: 2px 2px 4px #aaa;\">Por favor inicie sesión</p>     <p style=\"text-shadow: 2px 2px 4px #aaa;\">Línea 3</p>   </div> </html><br>");
+        lbl_Title.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+
+        lbl_Username.setText("Nombre de usuario :");
+
+        lbl_Password.setText("Contraseña :");
+
+        tf_Username.setBorder(null);
+
+        tf_Password.setBorder(null);
+
+        custom_Button1.setBorder(null);
+        custom_Button1.setForeground(new java.awt.Color(255, 255, 255));
+        custom_Button1.setText("Iniciar Sesión");
+        custom_Button1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+
+        javax.swing.GroupLayout p_containerLayout = new javax.swing.GroupLayout(p_container);
+        p_container.setLayout(p_containerLayout);
+        p_containerLayout.setHorizontalGroup(
+            p_containerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(p_containerLayout.createSequentialGroup()
+                .addGap(35, 35, 35)
+                .addGroup(p_containerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(p_containerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(lbl_Title, javax.swing.GroupLayout.PREFERRED_SIZE, 420, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(tf_Username, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lbl_Username, javax.swing.GroupLayout.DEFAULT_SIZE, 438, Short.MAX_VALUE)
+                        .addComponent(lbl_Password, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(tf_Password, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(custom_Button1, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(30, 30, 30))
+        );
+        p_containerLayout.setVerticalGroup(
+            p_containerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(p_containerLayout.createSequentialGroup()
+                .addGap(69, 69, 69)
+                .addComponent(lbl_Title, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(75, 75, 75)
+                .addComponent(lbl_Username)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(tf_Username, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(48, 48, 48)
+                .addComponent(lbl_Password)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(tf_Password, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(56, 56, 56)
+                .addComponent(custom_Button1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(94, Short.MAX_VALUE))
+        );
+
+        pnl_Login.add(p_container, java.awt.BorderLayout.EAST);
+
         getContentPane().add(pnl_Login, java.awt.BorderLayout.NORTH);
 
         pack();
@@ -80,7 +147,14 @@ public class W_Login extends javax.swing.JFrame {
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private presets.Custom_Button custom_Button1;
+    private javax.swing.JLabel lbl_Password;
+    private javax.swing.JLabel lbl_Title;
+    private javax.swing.JLabel lbl_Username;
+    private javax.swing.JPanel p_container;
     private presets.Custom_Panel pnl_Login;
     private presets.Pnl_StatusBar pnl_StatusBar;
+    private presets.Custom_PasswordField tf_Password;
+    private presets.Custom_TextField tf_Username;
     // End of variables declaration//GEN-END:variables
 }
