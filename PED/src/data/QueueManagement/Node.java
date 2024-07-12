@@ -1,9 +1,11 @@
-package data;
+package data.QueueManagement;
+
+import data.InfoObjetcs.Ticket;
 
 
 
 public class Node {
-    private Tiquete data;
+    private Ticket data;
     private Node next;
     //Comentario
 
@@ -12,16 +14,16 @@ public class Node {
         next = null;
     }
     
-    public Node(Tiquete dato) {
+    public Node(Ticket dato) {
         this.data = dato;
         next = null;
     }
 
-    public Tiquete getData() {
+    public Ticket getData() {
         return data;
     }
 
-    public void setDato(Tiquete data) {
+    public void setDato(Ticket data) {
         this.data = data;
     }
 

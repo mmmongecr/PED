@@ -1,7 +1,8 @@
 
-import data.App_Settings;
-import data.SQLite_DBManager;
+import data.Settings.API_Connection;
+import data.Settings.App_Settings;
 import gui.W_BankSelector;
+import gui.W_Login;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -36,13 +37,35 @@ public class PED {
 //        });
         
         W_BankSelector w_BankSelector = new W_BankSelector(sysSettings);
-        //W_Login w_Login = new W_Login(sysSettings);
+        W_Login w_Login = new W_Login(sysSettings);
         
-        SQLite_DBManager dBManager = new SQLite_DBManager();
-        dBManager.connectDB("Bank_Of_America.ped");
+    //    SQLite_DBManager dBManager = new SQLite_DBManager();
+    //    dBManager.connectDB("Bank_Of_America.ped");
 
         
+    
+        API_Connection api_Connection = new  API_Connection();
+        
+        String[] printable = null;
+        
+        printable = api_Connection.connectAPI("currencyExchange", null);
+        
+        System.out.println("currencyExchange");
+        for (int i = 0; i < printable.length; i++) {
+            System.out.println("\t" + printable[i]);
+        }
+        
+        printable = api_Connection.connectAPI("personalInformationByID", "207510670");
+        System.out.println("personalInformationByID");
+        for (int i = 0; i < printable.length; i++) {
+            System.out.println("\t" + printable[i]);
+        }
+        
+        
+        
     }
+    
+    
     
     public static void setLookAndFeel(){
         

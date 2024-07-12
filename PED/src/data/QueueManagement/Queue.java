@@ -1,5 +1,8 @@
 //import javax.swing.JOptionPane;
-package data;
+package data.QueueManagement;
+
+import data.InfoObjetcs.Ticket;
+
 public class Queue {
     private Node head;
     private Node last;
@@ -23,7 +26,7 @@ public class Queue {
     }
     
     //Encolar es lo mismo que agregar
-    public void addNode(Tiquete pData){
+    public void addNode(Ticket pData){
         Node nuevo = new Node(pData);
         if(isEmpty()){
             head=last=nuevo;

@@ -13,7 +13,7 @@ package presets;
 
 import java.awt.*;
 import javax.swing.*;
-import static javax.swing.SwingConstants.CENTER;
+import javax.swing.border.Border;
 import javax.swing.plaf.basic.BasicComboBoxUI;
 
 public class Custom_ComboBox<E> extends JComboBox<E> {
@@ -40,12 +40,13 @@ public class Custom_ComboBox<E> extends JComboBox<E> {
     private class CustomComboBoxUI extends BasicComboBoxUI {
         @Override
         protected JButton createArrowButton() {
-            JButton button = new JButton(new ImageIcon(arrowIcon));
+            JButton button = new JButton("");
+            button.setIcon(new ImageIcon(arrowIcon));
             button.setContentAreaFilled(false);
             button.setBorderPainted(false);
             button.setOpaque(false);
-            button.setHorizontalTextPosition(CENTER);
-            button.setVerticalTextPosition(CENTER);
+            button.setHorizontalTextPosition(JButton.CENTER);
+            button.setVerticalTextPosition(JButton.CENTER);
             
             return button;
         }
@@ -79,8 +80,15 @@ public class Custom_ComboBox<E> extends JComboBox<E> {
             } else {
                 setIcon(null);
             }
+            
+            Border paddingBorder = BorderFactory.createEmptyBorder(2, 5, 2, 2);
+            setBorder(paddingBorder);
 
             return this;
         }
+        
+        
     }
+    
+    
 }

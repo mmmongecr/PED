@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package data;
+package data.Settings;
 
 import java.io.File;
 import java.sql.Connection;
@@ -20,7 +20,7 @@ public class SQLite_DBManager {
     
     
     // Método para conectar a la base de datos
-    public void connectDB(String dbName) {
+    protected void connectDB(String dbName) {
         try {
             File dbFile = new File(dbName);
             boolean dbExists = dbFile.exists();

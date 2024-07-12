@@ -2,9 +2,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package data;
+package data.Settings;
 
+import data.InfoObjetcs.Bank;
+import data.InfoObjetcs.User;
 import java.io.File;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -15,42 +18,62 @@ import java.util.Date;
  */
 public class App_Settings {
     
-    private String currentSite;
+    private Bank bank;
     private User currentUser;
+    private String [] dollarExchangeRate;
+
     
-    
-    public App_Settings() {
+    /**************************
+    **    Getter y Setters   **
+    ***************************/
+    public Bank getCurrentBank() {
+        return bank;
     }
-
-    public String getCurrentSite() {
-        return currentSite;
+    public void setCurrentBank(Bank bank) {
+        this.bank = bank;
     }
-
-    public void setCurrentSite(String currentSite) {
-        this.currentSite = currentSite;
-    }
-
     public User getCurrentUser() {
         return currentUser;
     }
-
     public void setCurrentUser(User currentUser) {
         this.currentUser = currentUser;
     }
+    public String[] getDollarExchangeRate() {
+        return dollarExchangeRate;
+    }
+    public void setDollarExchangeRate() {
+        // Llama al API de tipo de cambio y trae los valores de compra y venta del dollar
+        API_Connection api_Connection = new  API_Connection();
+        dollarExchangeRate = api_Connection.connectAPI("currencyExchange", null);
+        
+        // Prepara el formato de valores
+        DecimalFormat formatter = new DecimalFormat("₡#,###.00");
+                
+        dollarExchangeRate[0] = formatter.format(Double.parseDouble(dollarExchangeRate[0]));
+        dollarExchangeRate[1] = formatter.format(Double.parseDouble(dollarExchangeRate[1]));
+    }
     
+    
+    
+    /*****************
+    **    Methods   **
+    ******************/
     
     public String Now(){
-        
-        // Define el formato de fecha
+        /// Trae la hora actual del sistema en un formato especifico 
+
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss a");
         return "" + dateFormat.format(new Date().getTime());
     }
     
     
 
-    //  Busca archivos con extensión .pedDB en el directorio actual.
-    //  @return Array de Strings con los nombres de los archivos encontrados, o null si no se encontraron archivos.
-    public String [] checkBankSites(){    
+    
+    public String [] checkBankSites(){
+        
+        ///  Busca archivos con extensión .pedDB en el directorio actual.
+        ///  Devuelve los nombres de los archivos encontrados, o null si no se encontraron archivos.
+        
         
         // Obtiene la dirección del programa
         String currentDir = System.getProperty("user.dir");

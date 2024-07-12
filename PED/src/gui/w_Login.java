@@ -4,7 +4,7 @@
  */
 package gui;
 
-import data.App_Settings;
+import data.Settings.App_Settings;
 import java.awt.GridBagConstraints;
 
 /**

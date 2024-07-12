@@ -1,8 +1,8 @@
-package data;
+package data.InfoObjetcs;
 
 import java.util.Date;
 
-public class Tiquete {
+public class Ticket {
 
     private int id;
     private String name;
@@ -13,7 +13,7 @@ public class Tiquete {
     private char type;
 
 
-    public Tiquete(int id, String name, int age, String procedure, char type) {
+    public Ticket(int id, String name, int age, String procedure, char type) {
         this.id = id;
         this.name = name;
         this.age = age;

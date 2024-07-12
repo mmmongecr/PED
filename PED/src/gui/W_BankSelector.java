@@ -4,7 +4,7 @@
  */
 package gui;
 
-import data.App_Settings;
+import data.Settings.App_Settings;
 import java.awt.CardLayout;
 import java.awt.GridBagConstraints;
 
@@ -53,9 +53,18 @@ public class W_BankSelector extends javax.swing.JFrame {
         
         String [] sites = appSettings.checkBankSites();
         
-        if (sites != null) {
+        
+        
+        for (int i = 0; i < sites.length; i++) {
+            sites[i] = sites[i].replace(".ped", "");
+            sites[i] = sites[i].replace("_", " ");
             
-            System.out.println("gui.W_BankSelector.checkBankSites()");
+        }
+        
+        
+        if (sites != null) {
+            cb_bankSelector.setModel(new javax.swing.DefaultComboBoxModel(sites));
+            
             CardLayout cardLayout = (CardLayout) pnl_cards.getLayout();
             cardLayout.show(pnl_cards, "Card1");
         }
@@ -89,12 +98,11 @@ public class W_BankSelector extends javax.swing.JFrame {
         lbl_TicketDispensers = new javax.swing.JLabel();
         tf_Counters = new presets.Custom_TextField();
         tf_TicketDispensers = new presets.Custom_PasswordField();
-        custom_ComboBox1 = new presets.Custom_ComboBox();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        cb_bankSelector = new presets.Custom_ComboBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Sistema de registro");
-        setMinimumSize(new java.awt.Dimension(600, 400));
+        setMaximumSize(null);
         setName("Login"); // NOI18N
         setResizable(false);
         setSize(new java.awt.Dimension(0, 0));
@@ -110,7 +118,6 @@ public class W_BankSelector extends javax.swing.JFrame {
         pnl_Container.setPreferredSize(new java.awt.Dimension(975, 525));
         pnl_Container.setLayout(new java.awt.BorderLayout());
 
-        p_container.setMaximumSize(null);
         p_container.setOpaque(false);
         p_container.setPreferredSize(new java.awt.Dimension(485, 575));
         p_container.setLayout(new java.awt.BorderLayout());
@@ -123,12 +130,11 @@ public class W_BankSelector extends javax.swing.JFrame {
         lbl_Title.setPreferredSize(new java.awt.Dimension(500, 50));
         p_container.add(lbl_Title, java.awt.BorderLayout.PAGE_START);
 
-        pnl_cards.setMaximumSize(null);
         pnl_cards.setOpaque(false);
         pnl_cards.setPreferredSize(new java.awt.Dimension(485, 525));
         pnl_cards.setLayout(new java.awt.CardLayout());
 
-        pnl_newSite.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        pnl_newSite.setMaximumSize(null);
         pnl_newSite.setOpaque(false);
         pnl_newSite.setPreferredSize(new java.awt.Dimension(500, 525));
         pnl_newSite.setLayout(new java.awt.GridBagLayout());
@@ -136,20 +142,17 @@ public class W_BankSelector extends javax.swing.JFrame {
         lbl_Description.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lbl_Description.setText("<html>No hemos encontrado Bancos registrados.<br>Por favor registre uno para iniciar el sistema.</html>");
         lbl_Description.setMaximumSize(null);
-        lbl_Description.setMinimumSize(null);
-        lbl_Description.setPreferredSize(null);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(10, 10, 10, 10);
         pnl_newSite.add(lbl_Description, gridBagConstraints);
 
         lbl_BankName.setText("Nombre del banco :");
-        lbl_BankName.setMaximumSize(null);
-        lbl_BankName.setMinimumSize(null);
-        lbl_BankName.setPreferredSize(null);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
@@ -159,9 +162,6 @@ public class W_BankSelector extends javax.swing.JFrame {
         pnl_newSite.add(lbl_BankName, gridBagConstraints);
 
         lbl_SiteName.setText("Cede :");
-        lbl_SiteName.setMaximumSize(null);
-        lbl_SiteName.setMinimumSize(null);
-        lbl_SiteName.setPreferredSize(null);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 1;
@@ -192,9 +192,6 @@ public class W_BankSelector extends javax.swing.JFrame {
         pnl_newSite.add(tf_Password, gridBagConstraints);
 
         lbl_Counters.setText("Cantidad de cajas :");
-        lbl_Counters.setMaximumSize(null);
-        lbl_Counters.setMinimumSize(null);
-        lbl_Counters.setPreferredSize(null);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 3;
@@ -203,9 +200,6 @@ public class W_BankSelector extends javax.swing.JFrame {
         pnl_newSite.add(lbl_Counters, gridBagConstraints);
 
         lbl_TicketDispensers.setText("Dispensadores de tiquetes :");
-        lbl_TicketDispensers.setMaximumSize(null);
-        lbl_TicketDispensers.setMinimumSize(null);
-        lbl_TicketDispensers.setPreferredSize(null);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 3;
@@ -235,18 +229,17 @@ public class W_BankSelector extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(10, 10, 10, 10);
         pnl_newSite.add(tf_TicketDispensers, gridBagConstraints);
 
-        custom_ComboBox1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        custom_ComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Banco 1", "Banco 2", "Banco 3" }));
-        custom_ComboBox1.setMaximumSize(null);
-        custom_ComboBox1.setPreferredSize(new java.awt.Dimension(150, 30));
+        cb_bankSelector.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        cb_bankSelector.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Banco 1", "Banco 2", "Banco 3" }));
+        cb_bankSelector.setMaximumSize(null);
+        cb_bankSelector.setPreferredSize(new java.awt.Dimension(150, 30));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridy = 5;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.ipadx = 100;
-        pnl_newSite.add(custom_ComboBox1, gridBagConstraints);
-
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        pnl_newSite.add(jComboBox1, new java.awt.GridBagConstraints());
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        pnl_newSite.add(cb_bankSelector, gridBagConstraints);
 
         pnl_cards.add(pnl_newSite, "Card1");
 
@@ -262,8 +255,7 @@ public class W_BankSelector extends javax.swing.JFrame {
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private presets.Custom_ComboBox custom_ComboBox1;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private presets.Custom_ComboBox cb_bankSelector;
     private javax.swing.JLabel lbl_BankName;
     private javax.swing.JLabel lbl_Counters;
     private javax.swing.JLabel lbl_Description;
