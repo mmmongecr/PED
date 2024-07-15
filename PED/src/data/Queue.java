@@ -1,31 +1,21 @@
 
-
 //import javax.swing.JOptionPane;
-
 package data;
-
-
 public class Queue {
-
     private Node head;
     private Node last;
-
     public Node getHead() {
         return head;
     }
-
     public void setHead(Node head) {
         this.head = head;
     }
-
     public Node getLast() {
         return last;
     }
-
     public void setLast(Node last) {
         this.last = last;
     }
-
     public boolean isEmpty() {
         if (head == null) {
             return true;
@@ -64,7 +54,6 @@ public class Queue {
     
     public boolean findNode(int x) {
         Node aux = head;
-
         while (aux != null) {
             if (x == aux.getData().getId()) {
                 System.out.println("El Valor " + x + " si se encuentra en la pila");
@@ -74,7 +63,6 @@ public class Queue {
         }
         System.out.println("El valor " + x + " no se encuentra en la pila");
         return false;
-
     }
     
     public Node extractNode(int x) {

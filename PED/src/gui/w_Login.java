@@ -4,17 +4,43 @@
  */
 package gui;
 
+import data.App_Settings;
+import java.awt.GridBagConstraints;
+
 /**
- *
  * @author manuel.mora
  */
-public class w_Login extends javax.swing.JFrame {
+public class W_Login extends javax.swing.JFrame {
 
     /**
-     * Creates new form w_Login
+     * Creates new form W_Login
      */
-    public w_Login() {
+    
+    private App_Settings appSettings;
+    private GridBagConstraints gbc;
+    
+    public W_Login(App_Settings appSettings) {
+        
+        this.appSettings = appSettings;
+        setLocationRelativeTo(null);
         initComponents();
+        
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                //new W_Login(appSettings).setVisible(true);
+            }
+        });
+        
+        
+        pnl_StatusBar.showPanel(appSettings);
+        pnl_Login.showPanel("BG1.png");
+        
+        repaint();
+        revalidate();
+        setVisible(true);
+        
+        
     }
 
     /**
@@ -26,57 +52,109 @@ public class w_Login extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        pnl_StatusBar = new presets.Pnl_StatusBar();
+        pnl_Login = new presets.Custom_Panel();
+        p_container = new javax.swing.JPanel();
+        lbl_Title = new javax.swing.JLabel();
+        lbl_Username = new javax.swing.JLabel();
+        lbl_Password = new javax.swing.JLabel();
+        tf_Username = new presets.Custom_TextField();
+        tf_Password = new presets.Custom_PasswordField();
+        custom_Button1 = new presets.Custom_Button();
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Sistema de registro");
+        setMinimumSize(new java.awt.Dimension(600, 400));
+        setName("Login"); // NOI18N
+        setResizable(false);
+        setSize(new java.awt.Dimension(0, 0));
+        setType(java.awt.Window.Type.UTILITY);
+
+        pnl_StatusBar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        pnl_StatusBar.setMaximumSize(null);
+        pnl_StatusBar.setMinimumSize(null);
+        pnl_StatusBar.setPreferredSize(new java.awt.Dimension(600, 25));
+        getContentPane().add(pnl_StatusBar, java.awt.BorderLayout.SOUTH);
+
+        pnl_Login.setPreferredSize(new java.awt.Dimension(975, 600));
+        pnl_Login.setLayout(new java.awt.BorderLayout());
+
+        p_container.setMaximumSize(null);
+        p_container.setMinimumSize(null);
+        p_container.setOpaque(false);
+        p_container.setPreferredSize(new java.awt.Dimension(500, 600));
+
+        lbl_Title.setFont(new java.awt.Font("Candara", 1, 24)); // NOI18N
+        lbl_Title.setForeground(new java.awt.Color(0, 204, 204));
+        lbl_Title.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbl_Title.setText("<html>   <div style=\"text-align: center; \">     <p style=\"text-shadow: 2px 2px 4px #aaa;\">Bienvenido al banco ###</p>     <p style=\"text-shadow: 2px 2px 4px #aaa;\">Por favor inicie sesión</p>     <p style=\"text-shadow: 2px 2px 4px #aaa;\">Línea 3</p>   </div> </html><br>");
+        lbl_Title.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+
+        lbl_Username.setText("Nombre de usuario :");
+
+        lbl_Password.setText("Contraseña :");
+
+        tf_Username.setBorder(null);
+
+        tf_Password.setBorder(null);
+
+        custom_Button1.setBorder(null);
+        custom_Button1.setForeground(new java.awt.Color(255, 255, 255));
+        custom_Button1.setText("Iniciar Sesión");
+        custom_Button1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+
+        javax.swing.GroupLayout p_containerLayout = new javax.swing.GroupLayout(p_container);
+        p_container.setLayout(p_containerLayout);
+        p_containerLayout.setHorizontalGroup(
+            p_containerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(p_containerLayout.createSequentialGroup()
+                .addGap(35, 35, 35)
+                .addGroup(p_containerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(p_containerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(lbl_Title, javax.swing.GroupLayout.PREFERRED_SIZE, 420, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(tf_Username, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lbl_Username, javax.swing.GroupLayout.DEFAULT_SIZE, 438, Short.MAX_VALUE)
+                        .addComponent(lbl_Password, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(tf_Password, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(custom_Button1, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(30, 30, 30))
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+        p_containerLayout.setVerticalGroup(
+            p_containerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(p_containerLayout.createSequentialGroup()
+                .addGap(69, 69, 69)
+                .addComponent(lbl_Title, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(75, 75, 75)
+                .addComponent(lbl_Username)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(tf_Username, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(48, 48, 48)
+                .addComponent(lbl_Password)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(tf_Password, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(56, 56, 56)
+                .addComponent(custom_Button1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(94, Short.MAX_VALUE))
         );
+
+        pnl_Login.add(p_container, java.awt.BorderLayout.EAST);
+
+        getContentPane().add(pnl_Login, java.awt.BorderLayout.NORTH);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(w_Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(w_Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(w_Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(w_Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new w_Login().setVisible(true);
-            }
-        });
-    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private presets.Custom_Button custom_Button1;
+    private javax.swing.JLabel lbl_Password;
+    private javax.swing.JLabel lbl_Title;
+    private javax.swing.JLabel lbl_Username;
+    private javax.swing.JPanel p_container;
+    private presets.Custom_Panel pnl_Login;
+    private presets.Pnl_StatusBar pnl_StatusBar;
+    private presets.Custom_PasswordField tf_Password;
+    private presets.Custom_TextField tf_Username;
     // End of variables declaration//GEN-END:variables
 }

@@ -17,7 +17,8 @@ import java.sql.Statement;
 public class SQLite_DBManager {
     
     private Connection conn;
-
+    
+    
     // Método para conectar a la base de datos
     public void connectDB(String dbName) {
         try {
@@ -94,7 +95,7 @@ public class SQLite_DBManager {
     }
 
     // Método para crear una tabla
-    public void createTable(String dbName, String tableName, String[][] columns) {
+    public synchronized void createTable(String dbName, String tableName, String[][] columns) {
         connectDB(dbName);
         try (Statement stmt = conn.createStatement()) {
         StringBuilder sql = new StringBuilder("CREATE TABLE IF NOT EXISTS " + tableName + " (");
@@ -117,7 +118,7 @@ public class SQLite_DBManager {
 }
 
     // Método para agregar una línea a la tabla
-    public void insertRow(String dbName, String tableName, String[][] values) {
+    public synchronized void insertRow(String dbName, String tableName, String[][] values) {
         connectDB(tableName);
         try (Statement stmt = conn.createStatement()) {
             StringBuilder columns = new StringBuilder();
@@ -139,7 +140,7 @@ public class SQLite_DBManager {
     }
 
     // Método para borrar una línea de la tabla por ID
-    public void deleteRowById(String dbName, String tableName, String id) {
+    public synchronized void deleteRowById(String dbName, String tableName, String id) {
         connectDB(dbName);
         try (Statement stmt = conn.createStatement()) {
             int parsedId = Integer.parseInt(id);
@@ -153,7 +154,7 @@ public class SQLite_DBManager {
     }
 
     // Método para leer todas las líneas de la tabla
-    public void readAllRows(String dbName, String tableName) {
+    public synchronized void readAllRows(String dbName, String tableName) {
         connectDB(dbName);
         try (Statement stmt = conn.createStatement()) {
             String sql = "SELECT * FROM " + tableName + "";
@@ -173,7 +174,7 @@ public class SQLite_DBManager {
     }
 
     // Método para leer una línea de la tabla por ID
-    public void readRowById(String dbName, String tableName, String id) {
+    public synchronized void readRowById(String dbName, String tableName, String id) {
         connectDB(dbName);
         try (Statement stmt = conn.createStatement()) {
             int parsedId = Integer.parseInt(id);
