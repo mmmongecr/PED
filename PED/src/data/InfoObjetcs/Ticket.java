@@ -4,53 +4,54 @@ import java.util.Date;
 
 public class Ticket {
 
-    private int id;
-    private String name;
-    private int age;
-    private Date creationTime;
-    private Date attentionTime;
-    private String procedure;
-    private char type;
-
+    private int ticketID, clientAge;
+    private String clientName, 
+            procedureType; // Depósitos , Retiros, Cambio de divisas
+    private Date creationTime, attentionTime;
+    private char clientType; // P = Preferencial | A = Un solo tramite |B = MultiTramite | 
+    private Ticket previousTicket,nextTicket1;
+    
+    
+    // El ticket number se reinicia cada d[ia
 
     public Ticket(int id, String name, int age, String procedure, char type) {
-        this.id = id;
-        this.name = name;
-        this.age = age;
+        this.ticketID = id;
+        this.clientName = name;
+        this.clientAge = age;
         this.creationTime = new Date();
         this.attentionTime = null;
-        this.procedure = procedure;
-        this.type = type;
+        this.procedureType = procedure;
+        this.clientType = type;
     }
 
 
-    public int getId() {
-        return id;
-    }
-
-    
-    public void setId(int id) {
-        this.id = id;
-    }
-
-
-    public String getName() {
-        return name;
+    public int getTicketID() {
+        return ticketID;
     }
 
     
-    public void setName(String name) {
-        this.name = name;
+    public void setTicketID(int ticketID) {
+        this.ticketID = ticketID;
     }
 
 
-    public int getAge() {
-        return age;
+    public String getClientName() {
+        return clientName;
+    }
+
+    
+    public void setClientName(String clientName) {
+        this.clientName = clientName;
+    }
+
+
+    public int getClientAge() {
+        return clientAge;
     }
     
 
-    public void setAge(int age) {
-        this.age = age;
+    public void setClientAge(int clientAge) {
+        this.clientAge = clientAge;
     }
 
 
@@ -74,30 +75,30 @@ public class Ticket {
     }
 
 
-    public String getProcedure() {
-        return procedure;
+    public String getProcedureType() {
+        return procedureType;
     }
 
     
-    public void setProcedure(String procedure) {
-        this.procedure = procedure;
+    public void setProcedureType(String procedureType) {
+        this.procedureType = procedureType;
     }
 
 
-    public char getType() {
-        return type;
+    public char getClientType() {
+        return clientType;
     }
 
 
-    public void setType(char type) {
-        this.type = type;
+    public void setClientType(char clientType) {
+        this.clientType = clientType;
     }
 
 
     @Override
     public String toString() {
-        return "Tiquete [id=" + id + ", name=" + name + ", age=" + age + ", creationTime=" + creationTime
-                + ", attentionTime=" + attentionTime + ", procedure=" + procedure + ", type=" + type + "]";
+        return "Tiquete [id=" + ticketID + ", name=" + clientName + ", age=" + clientAge + ", creationTime=" + creationTime
+                + ", attentionTime=" + attentionTime + ", procedure=" + procedureType + ", type=" + clientType + "]";
     }  
 
 }

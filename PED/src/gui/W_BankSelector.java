@@ -53,21 +53,17 @@ public class W_BankSelector extends javax.swing.JFrame {
         
         String [] sites = appSettings.checkBankSites();
         
-        
-        
         for (int i = 0; i < sites.length; i++) {
             sites[i] = sites[i].replace(".ped", "");
-            sites[i] = sites[i].replace("_", " ");
-            
+            sites[i] = sites[i].replace("_", " ");   
         }
-        
-        
         if (sites != null) {
-            cb_bankSelector.setModel(new javax.swing.DefaultComboBoxModel(sites));
+            //cb_bankSelector.setModel(new javax.swing.DefaultComboBoxModel(sites));
             
             CardLayout cardLayout = (CardLayout) pnl_cards.getLayout();
             cardLayout.show(pnl_cards, "Card1");
         }
+        
     }
     
     
@@ -91,14 +87,17 @@ public class W_BankSelector extends javax.swing.JFrame {
         pnl_newSite = new javax.swing.JPanel();
         lbl_Description = new javax.swing.JLabel();
         lbl_BankName = new javax.swing.JLabel();
-        lbl_SiteName = new javax.swing.JLabel();
-        tf_Username = new presets.Custom_TextField();
-        tf_Password = new presets.Custom_PasswordField();
+        tf_BankName = new presets.Custom_TextField();
         lbl_Counters = new javax.swing.JLabel();
+        cb_Counters = new presets.Custom_ComboBox();
         lbl_TicketDispensers = new javax.swing.JLabel();
-        tf_Counters = new presets.Custom_TextField();
-        tf_TicketDispensers = new presets.Custom_PasswordField();
-        cb_bankSelector = new presets.Custom_ComboBox();
+        cb_Dispensers = new presets.Custom_ComboBox();
+        jSeparator = new javax.swing.JSeparator();
+        lbl_AdminName = new javax.swing.JLabel();
+        tf_AdminName = new presets.Custom_TextField();
+        lbl_Password = new javax.swing.JLabel();
+        tf_Password = new presets.Custom_PasswordField();
+        filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 0));
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Sistema de registro");
@@ -114,7 +113,6 @@ public class W_BankSelector extends javax.swing.JFrame {
         pnl_StatusBar.setPreferredSize(new java.awt.Dimension(975, 25));
         getContentPane().add(pnl_StatusBar, java.awt.BorderLayout.SOUTH);
 
-        pnl_Container.setMaximumSize(null);
         pnl_Container.setPreferredSize(new java.awt.Dimension(975, 525));
         pnl_Container.setLayout(new java.awt.BorderLayout());
 
@@ -134,21 +132,19 @@ public class W_BankSelector extends javax.swing.JFrame {
         pnl_cards.setPreferredSize(new java.awt.Dimension(485, 525));
         pnl_cards.setLayout(new java.awt.CardLayout());
 
-        pnl_newSite.setMaximumSize(null);
         pnl_newSite.setOpaque(false);
         pnl_newSite.setPreferredSize(new java.awt.Dimension(500, 525));
         pnl_newSite.setLayout(new java.awt.GridBagLayout());
 
         lbl_Description.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        lbl_Description.setText("<html>No hemos encontrado Bancos registrados.<br>Por favor registre uno para iniciar el sistema.</html>");
+        lbl_Description.setText("<html> No se han encontrado bancos registrados en el sistema.<br> Para continuar, por favor registre un banco y cree un usuario administrador. </html>");
         lbl_Description.setMaximumSize(null);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.gridwidth = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.ipady = 50;
         gridBagConstraints.insets = new java.awt.Insets(10, 10, 10, 10);
         pnl_newSite.add(lbl_Description, gridBagConstraints);
 
@@ -157,28 +153,98 @@ public class W_BankSelector extends javax.swing.JFrame {
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.ipadx = 100;
         gridBagConstraints.insets = new java.awt.Insets(10, 10, 10, 10);
         pnl_newSite.add(lbl_BankName, gridBagConstraints);
 
-        lbl_SiteName.setText("Cede :");
+        tf_BankName.setBorder(null);
+        tf_BankName.setMaximumSize(null);
+        tf_BankName.setMinimumSize(null);
+        tf_BankName.setPreferredSize(null);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(10, 10, 10, 10);
+        pnl_newSite.add(tf_BankName, gridBagConstraints);
+
+        lbl_Counters.setText("<html>Cantidad <br>de cajas :</html>");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.insets = new java.awt.Insets(10, 10, 10, 10);
-        pnl_newSite.add(lbl_SiteName, gridBagConstraints);
+        pnl_newSite.add(lbl_Counters, gridBagConstraints);
 
-        tf_Username.setBorder(null);
-        tf_Username.setMaximumSize(null);
-        tf_Username.setMinimumSize(null);
-        tf_Username.setPreferredSize(null);
+        cb_Counters.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        cb_Counters.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20" }));
+        cb_Counters.setMaximumSize(null);
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 0.5;
         gridBagConstraints.insets = new java.awt.Insets(10, 10, 10, 10);
-        pnl_newSite.add(tf_Username, gridBagConstraints);
+        pnl_newSite.add(cb_Counters, gridBagConstraints);
+
+        lbl_TicketDispensers.setText("<html>Dispensadores <br>de tiquetes :</html>");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.insets = new java.awt.Insets(10, 10, 10, 10);
+        pnl_newSite.add(lbl_TicketDispensers, gridBagConstraints);
+
+        cb_Dispensers.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        cb_Dispensers.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20" }));
+        cb_Dispensers.setMaximumSize(null);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 0.5;
+        gridBagConstraints.insets = new java.awt.Insets(10, 10, 10, 10);
+        pnl_newSite.add(cb_Dispensers, gridBagConstraints);
+
+        jSeparator.setMaximumSize(null);
+        jSeparator.setMinimumSize(null);
+        jSeparator.setPreferredSize(null);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.insets = new java.awt.Insets(10, 0, 10, 0);
+        pnl_newSite.add(jSeparator, gridBagConstraints);
+
+        lbl_AdminName.setText("Nombre de usuario (Admin):");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.insets = new java.awt.Insets(10, 10, 10, 10);
+        pnl_newSite.add(lbl_AdminName, gridBagConstraints);
+
+        tf_AdminName.setBorder(null);
+        tf_AdminName.setMaximumSize(null);
+        tf_AdminName.setMinimumSize(null);
+        tf_AdminName.setPreferredSize(null);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(10, 10, 10, 10);
+        pnl_newSite.add(tf_AdminName, gridBagConstraints);
+
+        lbl_Password.setText("Contraseña: ");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.insets = new java.awt.Insets(10, 10, 10, 10);
+        pnl_newSite.add(lbl_Password, gridBagConstraints);
 
         tf_Password.setBorder(null);
         tf_Password.setMaximumSize(null);
@@ -186,60 +252,18 @@ public class W_BankSelector extends javax.swing.JFrame {
         tf_Password.setPreferredSize(null);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.insets = new java.awt.Insets(10, 10, 10, 10);
         pnl_newSite.add(tf_Password, gridBagConstraints);
-
-        lbl_Counters.setText("Cantidad de cajas :");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridy = 6;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.insets = new java.awt.Insets(10, 10, 10, 10);
-        pnl_newSite.add(lbl_Counters, gridBagConstraints);
-
-        lbl_TicketDispensers.setText("Dispensadores de tiquetes :");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.insets = new java.awt.Insets(10, 10, 10, 10);
-        pnl_newSite.add(lbl_TicketDispensers, gridBagConstraints);
-
-        tf_Counters.setBorder(null);
-        tf_Counters.setMaximumSize(null);
-        tf_Counters.setMinimumSize(null);
-        tf_Counters.setPreferredSize(null);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 4;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.insets = new java.awt.Insets(10, 10, 10, 10);
-        pnl_newSite.add(tf_Counters, gridBagConstraints);
-
-        tf_TicketDispensers.setBorder(null);
-        tf_TicketDispensers.setMaximumSize(null);
-        tf_TicketDispensers.setMinimumSize(null);
-        tf_TicketDispensers.setPreferredSize(null);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 4;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.insets = new java.awt.Insets(10, 10, 10, 10);
-        pnl_newSite.add(tf_TicketDispensers, gridBagConstraints);
-
-        cb_bankSelector.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        cb_bankSelector.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Banco 1", "Banco 2", "Banco 3" }));
-        cb_bankSelector.setMaximumSize(null);
-        cb_bankSelector.setPreferredSize(new java.awt.Dimension(150, 30));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridy = 5;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.ipadx = 100;
         gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.weighty = 1.0;
-        pnl_newSite.add(cb_bankSelector, gridBagConstraints);
+        gridBagConstraints.insets = new java.awt.Insets(0, 30, 50, 30);
+        pnl_newSite.add(filler1, gridBagConstraints);
 
         pnl_cards.add(pnl_newSite, "Card1");
 
@@ -255,11 +279,15 @@ public class W_BankSelector extends javax.swing.JFrame {
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private presets.Custom_ComboBox cb_bankSelector;
+    private presets.Custom_ComboBox cb_Counters;
+    private presets.Custom_ComboBox cb_Dispensers;
+    private javax.swing.Box.Filler filler1;
+    private javax.swing.JSeparator jSeparator;
+    private javax.swing.JLabel lbl_AdminName;
     private javax.swing.JLabel lbl_BankName;
     private javax.swing.JLabel lbl_Counters;
     private javax.swing.JLabel lbl_Description;
-    private javax.swing.JLabel lbl_SiteName;
+    private javax.swing.JLabel lbl_Password;
     private javax.swing.JLabel lbl_TicketDispensers;
     private javax.swing.JLabel lbl_Title;
     private javax.swing.JPanel p_container;
@@ -267,10 +295,9 @@ public class W_BankSelector extends javax.swing.JFrame {
     private presets.Pnl_StatusBar pnl_StatusBar;
     private javax.swing.JPanel pnl_cards;
     private javax.swing.JPanel pnl_newSite;
-    private presets.Custom_TextField tf_Counters;
+    private presets.Custom_TextField tf_AdminName;
+    private presets.Custom_TextField tf_BankName;
     private presets.Custom_PasswordField tf_Password;
-    private presets.Custom_PasswordField tf_TicketDispensers;
-    private presets.Custom_TextField tf_Username;
     // End of variables declaration//GEN-END:variables
 
     

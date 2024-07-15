@@ -57,7 +57,7 @@ public class Queue {
     public boolean findNode(int x) {
         Node aux = head;
         while (aux != null) {
-            if (x == aux.getData().getId()) {
+            if (x == aux.getData().getTicketID()) {
                 System.out.println("El Valor " + x + " si se encuentra en la pila");
                 return true;
             }
@@ -69,14 +69,14 @@ public class Queue {
     
     public Node extractNode(int x) {
         Node r = null;
-        if(x==this.head.getData().getId()){
+        if(x==this.head.getData().getTicketID()){
             r=head;
             this.processNode();
             r.setNext(null);
         }else{
             Node aux = head;
             while(aux.getNext()!=null){
-                if(aux.getNext().getData().getId()==x){
+                if(aux.getNext().getData().getTicketID()==x){
                     r=aux.getNext();
                     aux.setNext(aux.getNext().getNext());
                     r.setNext(null);
@@ -92,7 +92,7 @@ public class Queue {
         Node r = head;
         Node aux = this.head;
         while(aux!=null){
-            if(r.getData().getId()<aux.getData().getId()){
+            if(r.getData().getTicketID()<aux.getData().getTicketID()){
                 r=aux;
             }
             aux=aux.getNext();
@@ -109,7 +109,7 @@ public class Queue {
          while(head!=null){
              temp.addNode(this.getBiggest().getData());
              var biggestData = this.getBiggest().getData();
-             this.extractNode(biggestData.getId());
+             this.extractNode(biggestData.getTicketID());
          }
          this.head= temp.getHead();
         }

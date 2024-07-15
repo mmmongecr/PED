@@ -2,7 +2,6 @@
 import data.Settings.API_Connection;
 import data.Settings.App_Settings;
 import gui.W_BankSelector;
-import gui.W_Login;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -37,7 +36,7 @@ public class PED {
 //        });
         
         W_BankSelector w_BankSelector = new W_BankSelector(sysSettings);
-        W_Login w_Login = new W_Login(sysSettings);
+        //W_Login w_Login = new W_Login(sysSettings);
         
     //    SQLite_DBManager dBManager = new SQLite_DBManager();
     //    dBManager.connectDB("Bank_Of_America.ped");
