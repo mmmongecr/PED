@@ -9,7 +9,7 @@ public class Node {
     private Node next;
     //Comentario
 
-    public Node() {
+    public Node(User pUser) {
         this.data = null;
         next = null;
     }
