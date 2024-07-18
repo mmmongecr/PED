@@ -1,71 +1,133 @@
-package data.QueueManagement;
 
+package data.QueueManagement;
 import data.InfoObjetcs.Ticket;
+import javax.swing.JOptionPane;
 
 public class Caja {
-    private Node head;
-    private Node last;
 
-    public boolean isEmpty() {
-        return head == null;
-    }
-
-    public void addNode(Ticket data) {
-        Node nuevo = new Node(data);
-        if (isEmpty()) {
-            head = last = nuevo;
+    private Node headNode;
+    
+    public void joinQueue(Ticket pTicket) {
+        Node newNode = new Node(pTicket);
+        if (headNode == null) {
+            headNode = newNode;
+        } else if (headNode.getTicket().getTicketID() > pTicket.getTicketID()) {
+            headNode = newNode;
+        } else if (headNode.getNextNode() == null) {
+            headNode.setNextNode(newNode);
         } else {
-            Node current = head;
-            Node previous = null;
 
-//            while (current != null && current.getData().getPrioridad() >= data.getPrioridad()) {
-//                previous = current;
-//                current = current.getNext();
-//            }
+            Node aux = headNode;
+            aux = headNode;
+            while (aux.getNextNode() != null
+                    && aux.getNextNode().getTicket().getTicketID() < pTicket.getTicketID()) {
+                aux = aux.getNextNode();
+            }
+            aux.setNextNode(aux.getNextNode());
+            aux.setNextNode(newNode);
+        }
+    }
+    
+    public int leftQueue(int pId) {
+        int state = 0;
 
-            if (previous == null) {
-                nuevo.setNext(head);
-                head = nuevo;
+        if (headNode == null) {
+            state = 3;
+        } else if (headNode.getTicket().getTicketID() > pId) {
+            state = 2;
+        } else if (headNode.getTicket().getTicketID() == pId) {
+            headNode = headNode.getNextNode();
+        } else {
+            Node aux = headNode;
+            while (aux.getNextNode() != null
+                    && aux.getNextNode().getTicket().getTicketID() < pId) {
+                aux = aux.getNextNode();
+            }
+            if (aux.getNextNode() == null) {
+                state = 2;
+            } else if (aux.getNextNode().getTicket().getTicketID() == pId) {
+                aux.setNextNode(aux.getNextNode().getNextNode());
             } else {
-                previous.setNext(nuevo);
-                nuevo.setNext(current);
-            }
-
-            if (nuevo.getNext() == null) {
-                last = nuevo;
+                state = 2;
             }
         }
+        // 1 = Ticket eliminado
+        // 2 = Ticket no se encuentra en la fila
+        // 3 = Fila vacía
+        return state;
     }
-
-    public void processNode() {
-        if (isEmpty()) {
-            System.out.println("La cola está vacía");
-        } else {
-            head = head.getNext();
-            if (head == null) {
-                last = null;
+    
+    public Node consulta(int pId){
+        
+        // Verifica si la lista está vacía o si el ID que se busca es menos que 
+        if(headNode==null  || headNode.getTicket().getTicketID()>pId){
+            return null;
+        }else if(){
+            
+        }else if(headNode.getTicket().getTicketID()==pId){
+            state = 1;
+            JOptionPane.showMessageDialog(null, headNode);
+        }else{
+            Node
+                    aux=headNode;
+            while(aux.getNextNode()!=null&&
+                    aux.getNextNode().getTicket().getTicketID()<pId){
+                aux=aux.getNextNode();
+            }
+            
+            if(aux.getNextNode()==null){
+                JOptionPane.showMessageDialog(null, "Mensaje: elemento no esta en lista");
+            }else if(aux.getNextNode().getTicket().getTicketID()==pId){
+                JOptionPane.showMessageDialog(null, aux.getNextNode());
+            }else{
+                JOptionPane.showMessageDialog(null, "Mensaje: elemento no esta en lista");
             }
         }
+        
+        // 1 = Ticket eliminado
+        // 2 = Ticket no se encuentra en la fila
+        // 3 = Fila vacía
+        return state;
     }
-
-    public int getSize() {
-        int size = 0;
-        Node current = head;
-        while (current != null) {
-            size++;
-            current = current.getNext();
+    
+    public void modifica(int pId){
+        if(headNode==null){
+            JOptionPane.showMessageDialog(null, "ERROR: lista vacia");
+        }else if(headNode.getTicket().getTicketID()>pId){
+            JOptionPane.showMessageDialog(null, "Mensaje: elemento no esta en lista");
+        }else if(headNode.getTicket().getTicketID()==pId){
+            String newName=JOptionPane.showInputDialog(headNode+"\nIngrese el nuevo nombre");
+            headNode.getTicket().setName(newName);
+        }else{
+            Node
+                    aux=headNode;
+            while(aux.getNextNode()!=null&&
+                    aux.getNextNode().getTicket().getTicketID()<pId){
+                aux=aux.getNextNode();
+            }
+            
+            if(aux.getNextNode()==null){
+                JOptionPane.showMessageDialog(null, "Mensaje: elemento no esta en lista");
+            }else if(aux.getNextNode().getTicket().getTicketID()==pId){
+                String newName=JOptionPane.showInputDialog(aux.getNextNode()+"\nIngrese el nuevo nombre");
+                aux.getNextNode().getTicket().setName(newName);
+            }else{
+                JOptionPane.showMessageDialog(null, "Mensaje: elemento no esta en lista");
+            }
         }
-        return size;
     }
 
     @Override
     public String toString() {
-        StringBuilder r = new StringBuilder();
-        Node aux = head;
-        while (aux != null) {
-            r.append(aux.toString()).append("\n");
-            aux = aux.getNext();
+        String r="Lista:{\n";
+        Node
+                aux=headNode;
+        while(aux!=null){
+            r+=aux+"\n";
+            aux=aux.getNextNode();
         }
-        return r.toString();
+        r+="}";
+        return r;
     }
 }
+

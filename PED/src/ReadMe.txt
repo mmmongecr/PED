@@ -24,3 +24,8 @@ SI se puede manejar una sola cola de prioridades, y si se puede usar listas enla
 Manejar una cola diferente para cada tipo de tramite(adulto mayores, multiple tramites, empresarial, regular), ya sea con una cola de colas
 
 Se podría agregar un timer al tiquete para que los tiquetes con mucho tiempo tengan una prioridad para ser atendidos.
+
+
+
+
+AGREGAR BLOQUEO A LA BASE DE DATOS PARA LA CREACION DE TICKETES PARA EVITAR CONFLITOS 

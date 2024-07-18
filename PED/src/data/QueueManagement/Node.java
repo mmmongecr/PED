@@ -5,39 +5,39 @@ import data.InfoObjetcs.Ticket;
 
 
 public class Node {
-    private Ticket data;
-    private Node next;
+    private Ticket ticket;
+    private Node nextNode;
     //Comentario
 
-    public Node(User pUser) {
-        this.data = null;
-        next = null;
+    public Node() {
+        this.ticket = null;
+        nextNode = null;
     }
     
-    public Node(Ticket dato) {
-        this.data = dato;
-        next = null;
+    public Node(Ticket ticket) {
+        this.ticket = ticket;
+        nextNode = null;
     }
 
-    public Ticket getData() {
-        return data;
+    public Ticket getTicket() {
+        return ticket;
     }
 
-    public void setDato(Ticket data) {
-        this.data = data;
+    public void setDato(Ticket ticket) {
+        this.ticket = ticket;
     }
 
-    public Node getNext() {
-        return next;
+    public Node getNextNode() {
+        return nextNode;
     }
 
-    public void setNext(Node next) {
-        this.next = next;
+    public void setNextNode(Node nextNode) {
+        this.nextNode = nextNode;
     }
 
     @Override
     public String toString() {
-        return " " + data +"\n";
+        return " " + ticket +"\n";
     }
 
     

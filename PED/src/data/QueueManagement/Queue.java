@@ -32,7 +32,7 @@ public class Queue {
         if(isEmpty()){
             head=last=nuevo;
         }else{
-            last.setNext(nuevo);
+            last.setNextNode(nuevo);
             last= nuevo;
         }
     }
@@ -47,7 +47,7 @@ public class Queue {
                 
                 head=last=null;
             }else{
-                head=head.getNext();
+                head=head.getNextNode();
             }
             //return aux;
         }
@@ -58,11 +58,11 @@ public class Queue {
     public boolean findNode(int x) {
         Node aux = head;
         while (aux != null) {
-            if (x == aux.getData().getTicketID()) {
+            if (x == aux.getTicket().getTicketID()) {
                 System.out.println("El Valor " + x + " si se encuentra en la pila");
                 return true;
             }
-            aux = aux.getNext();
+            aux = aux.getNextNode();
         }
         System.out.println("El valor " + x + " no se encuentra en la pila");
         return false;
@@ -70,20 +70,20 @@ public class Queue {
     
     public Node extractNode(int x) {
         Node r = null;
-        if(x==this.head.getData().getTicketID()){
+        if(x==this.head.getTicket().getTicketID()){
             r=head;
             this.processNode();
-            r.setNext(null);
+            r.setNextNode(null);
         }else{
             Node aux = head;
-            while(aux.getNext()!=null){
-                if(aux.getNext().getData().getTicketID()==x){
-                    r=aux.getNext();
-                    aux.setNext(aux.getNext().getNext());
-                    r.setNext(null);
+            while(aux.getNextNode()!=null){
+                if(aux.getNextNode().getTicket().getTicketID()==x){
+                    r=aux.getNextNode();
+                    aux.setNextNode(aux.getNextNode().getNextNode());
+                    r.setNextNode(null);
                     break;
                 }
-                aux=aux.getNext();
+                aux=aux.getNextNode();
             }
         }
         return r;
@@ -93,10 +93,10 @@ public class Queue {
         Node r = head;
         Node aux = this.head;
         while(aux!=null){
-            if(r.getData().getTicketID()<aux.getData().getTicketID()){
+            if(r.getTicket().getTicketID()<aux.getTicket().getTicketID()){
                 r=aux;
             }
-            aux=aux.getNext();
+            aux=aux.getNextNode();
         }
         //System.out.println(r+" es el valor mayor");
         return r;
@@ -106,10 +106,10 @@ public class Queue {
         //se va almacenar los datos de la cola principal
         Queue temp = new Queue();
         while(head!=null){
-            temp.addNode(this.getBiggest().getData());
+            temp.addNode(this.getBiggest().getTicket());
          while(head!=null){
-             temp.addNode(this.getBiggest().getData());
-             var biggestData = this.getBiggest().getData();
+             temp.addNode(this.getBiggest().getTicket());
+             var biggestData = this.getBiggest().getTicket();
              this.extractNode(biggestData.getTicketID());
          }
          this.head= temp.getHead();
@@ -126,7 +126,7 @@ public class Queue {
         Node aux = head;
         while(aux != null){
             r+= aux.toString();
-            aux= aux.getNext();
+            aux= aux.getNextNode();
         }
         return r ;
     }
