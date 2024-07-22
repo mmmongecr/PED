@@ -18,6 +18,10 @@ public class SQLite_DBManager {
     
     private Connection conn;
     
+    public void setNewBank(){
+        
+    }
+    
     
     // Método para conectar a la base de datos
     protected void connectDB(String dbName) {
