@@ -40,7 +40,7 @@ public class W_BankSelector extends javax.swing.JFrame {
         
         
         pnl_StatusBar.showPanel(appSettings);
-        pnl_Container.showPanel("BG1.png");
+        pnl_Container.showPanel("bg3.png");
         
         repaint();
         revalidate();

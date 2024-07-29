@@ -57,12 +57,13 @@ public class Caja {
         return state;
     }
     
+    /*
     public Node consulta(int pId){
         
         // Verifica si la lista está vacía o si el ID que se busca es menos que 
         if(headNode==null  || headNode.getTicket().getTicketID()>pId){
             return null;
-        }else if(){
+        }else if(true){
             
         }else if(headNode.getTicket().getTicketID()==pId){
             state = 1;
@@ -116,7 +117,7 @@ public class Caja {
             }
         }
     }
-
+*/
     @Override
     public String toString() {
         String r="Lista:{\n";

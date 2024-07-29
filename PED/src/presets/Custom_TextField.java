@@ -9,6 +9,7 @@ import java.awt.Image;
 import java.awt.Insets;
 import javax.swing.ImageIcon;
 import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
 
 /**
  *
@@ -24,6 +25,7 @@ public class Custom_TextField extends JTextField{
         
         // Cargar la imagen de fondo desde el directorio assets
         backgroundImage = new ImageIcon("src/assets/TextField.png").getImage();
+        setBorder(new EmptyBorder(1,1,1,1));
         setOpaque(false);
         repaint();
     
@@ -34,7 +36,8 @@ public class Custom_TextField extends JTextField{
         super.paintComponent(g);
         // Dibujar la imagen de fondo escalada al tamaño del panel
         if (backgroundImage != null) {
-            g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
+            // g.drawImage (Imagen, posición x, posición y, ancho, largo, objeto)
+            g.drawImage(backgroundImage, 1, 1, getWidth()-3, getHeight()-3, this);
         }
     }
     

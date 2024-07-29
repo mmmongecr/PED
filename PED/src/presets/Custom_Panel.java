@@ -4,9 +4,11 @@
  */
 package presets;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import javax.swing.ImageIcon;
+import javax.swing.JComponent;
 
 /**
  *
@@ -25,16 +27,10 @@ public class Custom_Panel extends javax.swing.JPanel {
     
     public void showPanel(String imageName){
         initComponents();
-        
-        // Carga la imagen de fondo desde la carpeta assets
-        String url = "src/assets/" + imageName;
         backgroundImage = new ImageIcon("src/assets/" + imageName).getImage();
-        //System.out.println("Esta es la dirección de la imagen  : " + url + "/n"
-        //        + "El file existe o no : " + backgroundImage.getProperty("key", this));
-        
         repaint();
+        
     }
-    
     
     @Override
     protected void paintComponent(Graphics g) {

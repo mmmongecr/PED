@@ -34,7 +34,7 @@ public class W_Login extends javax.swing.JFrame {
         
         
         pnl_StatusBar.showPanel(appSettings);
-        pnl_Login.showPanel("BG1.png");
+        pnl_Login.showPanel("bg2.png");
         
         repaint();
         revalidate();

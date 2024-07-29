@@ -2,6 +2,7 @@
 import data.Settings.API_Connection;
 import data.Settings.App_Settings;
 import gui.W_BankSelector;
+import gui.W_Dispenser;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -23,7 +24,7 @@ public class PED {
         
         App_Settings sysSettings = new App_Settings();
         
-        
+        W_Dispenser w = new W_Dispenser();
         
         
 //        Thread t_statusBar = new Thread(new Runnable(){

@@ -200,4 +200,99 @@ public class SQLite_DBManager {
         closeDB();
     }
     
+    public void createNewDB(String dbName, String [] bankInfo, String [] adminUser){
+        
+        String[][] queryData = null;
+        File dbFile = new File(dbName);
+        connectDB(dbName);
+
+        // Crea la tabla BankInfo
+        queryData = new String[][]{
+            {"bName", "TEXT"},
+            {"bCounters", "INTEGER"},
+            {"bDispensers", "INTEGER"},
+            {"bDollarSellPrice", "REAL"},
+            {"bDollarBuyPrice", "REAL"},
+            {"bDollarLastUpdate", "INTEGER"}
+        };
+        createTable(dbName, "BankInfo", queryData);
+
+        // Crea la tabla Counters
+        queryData = new String[][]{
+            {"cID", "INTEGER", "PRIMARY KEY", "AUTOINCREMENT"},
+            {"cName", "TEXT"},
+            {"cStatus", "TEXT"},
+            {"uCashierID", "INTEGER"}
+        };
+        createTable(dbName, "Counters", queryData);
+
+        // Crea la tabla Users
+        queryData = new String[][]{
+            {"uID", "INTEGER", "PRIMARY KEY", "AUTOINCREMENT"},
+            {"uUserName", "TEXT"},
+            {"uName", "TEXT"},
+            {"uLastName", "TEXT"},
+            {"uType", "TEXT"},
+            {"uStatus", "TEXT"},
+            {"uLastLogin", "INTEGER"}
+        };
+        createTable(dbName, "Users", queryData);
+
+        // Crea la tabla Tickets
+        queryData = new String[][]{
+            {"tID", "INTEGER", "PRIMARY KEY", "AUTOINCREMENT"},
+            {"tClientName", "TEXT"},
+            {"tClientID", "INTEGER"},
+            {"tClientAge", "INTEGER"},
+            {"tClientType", "TEXT"},
+            {"tCreationDate", "INTEGER"},
+            {"tAttentionDate", "INTEGER"},
+            {"tProcedureType", "TEXT"},
+            {"cCounterID", "INTEGER"},
+            {"uCashierID", "INTEGER"},};
+        createTable(dbName, "Tickets", queryData);
+
+        // Inserta la información del banco
+        queryData = new String[][]{
+            {"bName", bankInfo[0]},
+            {"bCounters", bankInfo[1]},
+            {"bDollarSellPrice", bankInfo[3]},
+            {"bDollarBuyPrice", bankInfo[4]},
+            {"bDollarLastUpdate", bankInfo[5]}
+        };
+        insertRow(dbName, "BankInfo", queryData);
+
+        // Inserta la información del usuario Admin
+        queryData = new String[][]{
+            {"uUserName", adminUser[0]},
+            {"uName", adminUser[1]},
+            {"uLastName", adminUser[2]},
+            {"uType", "uAdmin"},
+            {"uStatus", "Active"}
+        };
+        insertRow(dbName, "Users", queryData);
+
+        // Genera la cantidad de cajas establecidos en BankInfo
+        for (int i = 1; i <= Integer.parseInt(bankInfo[1]); i++) {
+            queryData = new String[][]{
+                {"cName", "Caja " + i},
+                {"cStatus", "Inactive"},};
+            insertRow(dbName, "Users", queryData);
+        }
+
+        //////////////////////// IDEA
+        //// Cuando un cajero se logea tiene que elegir la caja en la que va a trabajar, en ese momento cambia el status de la caja, cuando el usuario se desloguea la caja vuelve a estar inactiva
+        // Genera la cantidad de usuarios dispensadores establecidos en BankInfo
+        for (int i = 1; i <= Integer.parseInt(bankInfo[2]); i++) {
+            queryData = new String[][]{
+                {"uUserName", "tickerDispenser" + i},
+                {"uName", "Dispensador"},
+                {"uLastName", "" + i},
+                {"uType", "uDispenser"},
+                {"uStatus", "Active"}
+            };
+            insertRow(dbName, "Users", queryData);
+        }
+    }
+    
 }
