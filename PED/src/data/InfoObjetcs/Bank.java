@@ -4,7 +4,9 @@
  */
 package data.InfoObjetcs;
 
+import data.Settings.App_Settings;
 import data.Settings.SQLite_DBManager;
+import java.util.Date;
 
 /**
  *
@@ -12,15 +14,26 @@ import data.Settings.SQLite_DBManager;
  */
 public class Bank {
     
-    private String bankName;
+    private String bName;
+    private int bCounters, bDispensers;  
+    private double bDollarSellPrice, bDollarBuyPrice;
+    private Date bDollarLastUpdate; 
+    private App_Settings app_Settings;
+    private SQLite_DBManager dbManager;
+    
+    public Bank(String bankName){
+        new SQLite_DBManager();
+        //dbManager.readRowById(bName, "BankInfo", "");
+    }
+    
             
             // agregar un status para las cajas por si están fuera de servicio
     public void getBankCounters(){
         Thread dateTimeThread = new Thread(new Runnable() {
             @Override
             public void run() {
-                SQLite_DBManager dbManager = new SQLite_DBManager();
-                dbManager.readRowById(bankName, bankName, bankName);
+                
+                //dbManager.readRowById(bankName, bankName, bankName);
                 
             }
         });

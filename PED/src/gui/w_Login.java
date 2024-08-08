@@ -52,15 +52,15 @@ public class W_Login extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        pnl_StatusBar = new presets.Pnl_StatusBar();
-        pnl_Login = new presets.Custom_Panel();
+        pnl_StatusBar = new presets.CM_StatusBar();
+        pnl_Login = new presets.CM_Panel();
         p_container = new javax.swing.JPanel();
         lbl_Title = new javax.swing.JLabel();
         lbl_Username = new javax.swing.JLabel();
         lbl_Password = new javax.swing.JLabel();
-        tf_Username = new presets.Custom_TextField();
-        tf_Password = new presets.Custom_PasswordField();
-        custom_Button1 = new presets.Custom_Button();
+        tf_Username = new presets.CM_TextField();
+        tf_Password = new presets.CM_PasswordField();
+        custom_Button1 = new presets.CM_Button();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Sistema de registro");
@@ -147,14 +147,14 @@ public class W_Login extends javax.swing.JFrame {
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private presets.Custom_Button custom_Button1;
+    private presets.CM_Button custom_Button1;
     private javax.swing.JLabel lbl_Password;
     private javax.swing.JLabel lbl_Title;
     private javax.swing.JLabel lbl_Username;
     private javax.swing.JPanel p_container;
-    private presets.Custom_Panel pnl_Login;
-    private presets.Pnl_StatusBar pnl_StatusBar;
-    private presets.Custom_PasswordField tf_Password;
-    private presets.Custom_TextField tf_Username;
+    private presets.CM_Panel pnl_Login;
+    private presets.CM_StatusBar pnl_StatusBar;
+    private presets.CM_PasswordField tf_Password;
+    private presets.CM_TextField tf_Username;
     // End of variables declaration//GEN-END:variables
 }

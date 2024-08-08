@@ -36,14 +36,14 @@
         </Constraint>
       </Constraints>
     </Component>
-    <Component class="presets.Custom_TextField" name="tf_IDNumber">
+    <Component class="presets.CM_TextField" name="tf_IDNumber">
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
           <GridBagConstraints gridX="0" gridY="1" gridWidth="3" gridHeight="1" fill="1" ipadX="0" ipadY="0" insetsTop="10" insetsLeft="5" insetsBottom="10" insetsRight="5" anchor="10" weightX="0.0" weightY="0.0"/>
         </Constraint>
       </Constraints>
     </Component>
-    <Component class="presets.Custom_Button" name="btn_Number1">
+    <Component class="presets.CM_Button" name="btn_Number1">
       <Properties>
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -59,7 +59,7 @@
         </Constraint>
       </Constraints>
     </Component>
-    <Component class="presets.Custom_Button" name="btn_Number2">
+    <Component class="presets.CM_Button" name="btn_Number2">
       <Properties>
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -75,7 +75,7 @@
         </Constraint>
       </Constraints>
     </Component>
-    <Component class="presets.Custom_Button" name="btn_Number3">
+    <Component class="presets.CM_Button" name="btn_Number3">
       <Properties>
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -91,7 +91,7 @@
         </Constraint>
       </Constraints>
     </Component>
-    <Component class="presets.Custom_Button" name="btn_Number4">
+    <Component class="presets.CM_Button" name="btn_Number4">
       <Properties>
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -107,7 +107,7 @@
         </Constraint>
       </Constraints>
     </Component>
-    <Component class="presets.Custom_Button" name="btn_Number5">
+    <Component class="presets.CM_Button" name="btn_Number5">
       <Properties>
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -123,7 +123,7 @@
         </Constraint>
       </Constraints>
     </Component>
-    <Component class="presets.Custom_Button" name="btn_Number6">
+    <Component class="presets.CM_Button" name="btn_Number6">
       <Properties>
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -139,7 +139,7 @@
         </Constraint>
       </Constraints>
     </Component>
-    <Component class="presets.Custom_Button" name="btn_Number7">
+    <Component class="presets.CM_Button" name="btn_Number7">
       <Properties>
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -155,7 +155,7 @@
         </Constraint>
       </Constraints>
     </Component>
-    <Component class="presets.Custom_Button" name="btn_Number8">
+    <Component class="presets.CM_Button" name="btn_Number8">
       <Properties>
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -171,7 +171,7 @@
         </Constraint>
       </Constraints>
     </Component>
-    <Component class="presets.Custom_Button" name="btn_Number9">
+    <Component class="presets.CM_Button" name="btn_Number9">
       <Properties>
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -187,7 +187,7 @@
         </Constraint>
       </Constraints>
     </Component>
-    <Component class="presets.Custom_Button" name="btn_Number0">
+    <Component class="presets.CM_Button" name="btn_Number0">
       <Properties>
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -203,7 +203,7 @@
         </Constraint>
       </Constraints>
     </Component>
-    <Component class="presets.Custom_Button" name="btn_DeleteNumber">
+    <Component class="presets.CM_Button" name="btn_DeleteNumber">
       <Properties>
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="ff" red="ff" type="rgb"/>

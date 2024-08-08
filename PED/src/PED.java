@@ -24,7 +24,7 @@ public class PED {
         
         App_Settings sysSettings = new App_Settings();
         
-        W_Dispenser w = new W_Dispenser();
+        //W_Dispenser w = new W_Dispenser();
         
         
 //        Thread t_statusBar = new Thread(new Runnable(){
@@ -43,7 +43,7 @@ public class PED {
     //    dBManager.connectDB("Bank_Of_America.ped");
 
         
-    
+    /*
         API_Connection api_Connection = new  API_Connection();
         
         String[] printable = null;
@@ -60,8 +60,7 @@ public class PED {
         for (int i = 0; i < printable.length; i++) {
             System.out.println("\t" + printable[i]);
         }
-        
-        
+      */  
         
     }
     

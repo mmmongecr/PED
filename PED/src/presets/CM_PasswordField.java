@@ -14,11 +14,11 @@ import javax.swing.JPasswordField;
  *
  * @author Manuel Mora Monge
  */
-public class Custom_PasswordField extends JPasswordField{
+public class CM_PasswordField extends JPasswordField{
 
     private final Image backgroundImage;
     
-    public Custom_PasswordField(){
+    public CM_PasswordField(){
         super();
         
         

@@ -35,7 +35,7 @@
 
   <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout"/>
   <SubComponents>
-    <Container class="presets.Pnl_StatusBar" name="pnl_StatusBar">
+    <Container class="presets.CM_StatusBar" name="pnl_StatusBar">
       <Properties>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.BevelBorderInfo">
@@ -60,7 +60,7 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.DesignFlowLayout"/>
     </Container>
-    <Container class="presets.Custom_Panel" name="pnl_Login">
+    <Container class="presets.CM_Panel" name="pnl_Login">
       <Properties>
         <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
           <Dimension value="[975, 600]"/>
@@ -153,21 +153,21 @@
                 <Property name="text" type="java.lang.String" value="Contrase&#xf1;a :"/>
               </Properties>
             </Component>
-            <Component class="presets.Custom_TextField" name="tf_Username">
+            <Component class="presets.CM_TextField" name="tf_Username">
               <Properties>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="null"/>
                 </Property>
               </Properties>
             </Component>
-            <Component class="presets.Custom_PasswordField" name="tf_Password">
+            <Component class="presets.CM_PasswordField" name="tf_Password">
               <Properties>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="null"/>
                 </Property>
               </Properties>
             </Component>
-            <Component class="presets.Custom_Button" name="custom_Button1">
+            <Component class="presets.CM_Button" name="custom_Button1">
               <Properties>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="null"/>

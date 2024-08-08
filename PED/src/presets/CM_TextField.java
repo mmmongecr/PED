@@ -15,11 +15,11 @@ import javax.swing.border.EmptyBorder;
  *
  * @author Manuel Mora Monge
  */
-public class Custom_TextField extends JTextField{
+public class CM_TextField extends JTextField{
 
     private final Image backgroundImage;
     
-    public Custom_TextField(){
+    public CM_TextField(){
         super();
         
         

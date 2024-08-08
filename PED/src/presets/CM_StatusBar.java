@@ -13,12 +13,12 @@ import javax.swing.JPanel;
  *
  * @author Manuel Mora Monge
  */
-public class Pnl_StatusBar extends javax.swing.JPanel {
+public class CM_StatusBar extends javax.swing.JPanel {
 
     private JPanel selfPanel;
     private App_Settings appSettings; 
     
-    public Pnl_StatusBar() {
+    public CM_StatusBar() {
     }
     
     public void showPanel(App_Settings appSettings){
@@ -47,7 +47,7 @@ public class Pnl_StatusBar extends javax.swing.JPanel {
                     try {
                         Thread.sleep(1000);
                     } catch (InterruptedException ex) {
-                        Logger.getLogger(Pnl_StatusBar.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(CM_StatusBar.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
 
@@ -78,8 +78,6 @@ public class Pnl_StatusBar extends javax.swing.JPanel {
         lb_Datetime = new javax.swing.JLabel();
 
         setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        setMaximumSize(null);
-        setMinimumSize(null);
         setPreferredSize(new java.awt.Dimension(975, 30));
         setLayout(new java.awt.GridBagLayout());
 

@@ -21,6 +21,9 @@ public class App_Settings {
     private Bank bank;
     private User currentUser;
     private String [] dollarExchangeRate;
+    
+    public App_Settings(){
+    }
 
     
     /**************************
@@ -29,8 +32,9 @@ public class App_Settings {
     public Bank getCurrentBank() {
         return bank;
     }
-    public void setCurrentBank(Bank bank) {
-        this.bank = bank;
+    public void setCurrentBank(String bankName) {
+        //bank = new Bank();
+        //this.bank = bank;
     }
     public User getCurrentUser() {
         return currentUser;

@@ -18,7 +18,7 @@ import javax.swing.plaf.basic.BasicComboBoxEditor;
 import javax.swing.plaf.basic.BasicComboBoxRenderer;
 import javax.swing.plaf.basic.BasicComboBoxUI;
 
-public class Custom_ComboBox<E> extends JComboBox<E> {
+public class CM_ComboBox<E> extends JComboBox<E> {
 
     
     
@@ -26,7 +26,7 @@ public class Custom_ComboBox<E> extends JComboBox<E> {
     private Image arrowIcon;
     private Image itemBackground;
 
-    public Custom_ComboBox() {
+    public CM_ComboBox() {
         super();
 
         this.background         = new ImageIcon("src/assets/TextField.png").getImage();

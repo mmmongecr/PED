@@ -15,12 +15,12 @@ import javax.swing.JButton;
  *
  * @author Manuel Mora Monge
  */
-public class Custom_Button extends JButton{
+public class CM_Button extends JButton{
     
     
     private Image btn_Normal, btn_Hover, btn_Pressed;
     
-    public Custom_Button(){
+    public CM_Button(){
         super();
         
         setOpaque(false);

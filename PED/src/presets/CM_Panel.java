@@ -14,14 +14,14 @@ import javax.swing.JComponent;
  *
  * @author Manuel Mora Monge
  */
-public class Custom_Panel extends javax.swing.JPanel {
+public class CM_Panel extends javax.swing.JPanel {
 
     private Image backgroundImage;
 
     /**
      * Creates new form Custom_Panel
      */
-    public Custom_Panel() {
+    public CM_Panel() {
         
     }
     

@@ -97,6 +97,21 @@ public class SQLite_DBManager {
             System.out.println(e.getMessage());
         }
     }
+    
+    public boolean noSQLInjection(String input){
+        
+        boolean validation = true;
+        
+        if (
+                input != null // No es vacío 
+                && input.length() <= 50 // No es mayor a 50 caracteres
+                && input.matches("[a-zA-Z0-9_ ]+") // Solo posee números y letras
+            ) {
+            return true;
+        }else {
+            return false;
+        }
+    }
 
     // Método para crear una tabla
     public synchronized void createTable(String dbName, String tableName, String[][] columns) {
@@ -178,11 +193,20 @@ public class SQLite_DBManager {
     }
 
     // Método para leer una línea de la tabla por ID
-    public synchronized void readRowById(String dbName, String tableName, String id) {
+    public synchronized String [][] readRowById(String dbName, String tableName, String id) {
         connectDB(dbName);
+        
+        String [][] results;
+        
         try (Statement stmt = conn.createStatement()) {
-            int parsedId = Integer.parseInt(id);
-            String sql = "SELECT * FROM " + tableName + " WHERE id = " + parsedId;
+            String sql = "SELECT * FROM " + tableName;
+            
+            // Valida si el parámetro pID tiene información para filtrar
+            if (!id.equals("")) {
+                int parsedId = Integer.parseInt(id);
+                sql += " WHERE id = " + parsedId;
+            }
+            
             ResultSet rs = stmt.executeQuery(sql);
             if (rs.next()) {
                 System.out.print("ID: " + rs.getInt("id") + ", ");
@@ -198,11 +222,16 @@ public class SQLite_DBManager {
             System.out.println(e.getMessage());
         }
         closeDB();
+        return null;
     }
+
     
-    public void createNewDB(String dbName, String [] bankInfo, String [] adminUser){
+    public void createNewDB(String [] bankInfo, String [] adminUser){
         
+        // Convierte el nombre del Banco a formato sin espacios para nombrar la DB
+        String dbName = bankInfo[0].replace(" ", "_") + ".ped";
         String[][] queryData = null;
+        
         File dbFile = new File(dbName);
         connectDB(dbName);
 
@@ -229,7 +258,8 @@ public class SQLite_DBManager {
         // Crea la tabla Users
         queryData = new String[][]{
             {"uID", "INTEGER", "PRIMARY KEY", "AUTOINCREMENT"},
-            {"uUserName", "TEXT"},
+            {"uUsername", "TEXT"},
+            {"uPassword", "TEXT"},
             {"uName", "TEXT"},
             {"uLastName", "TEXT"},
             {"uType", "TEXT"},
@@ -256,18 +286,18 @@ public class SQLite_DBManager {
         queryData = new String[][]{
             {"bName", bankInfo[0]},
             {"bCounters", bankInfo[1]},
-            {"bDollarSellPrice", bankInfo[3]},
-            {"bDollarBuyPrice", bankInfo[4]},
-            {"bDollarLastUpdate", bankInfo[5]}
+            {"bDollarSellPrice", "0"},
+            {"bDollarBuyPrice", "0"}
         };
         insertRow(dbName, "BankInfo", queryData);
 
         // Inserta la información del usuario Admin
         queryData = new String[][]{
-            {"uUserName", adminUser[0]},
-            {"uName", adminUser[1]},
-            {"uLastName", adminUser[2]},
-            {"uType", "uAdmin"},
+            {"uUsername", adminUser[0]},
+            {"uPassword", adminUser[1]},
+            {"uName", adminUser[2]},
+            {"uLastName", adminUser[3]},
+            {"uType", "Admin"},
             {"uStatus", "Active"}
         };
         insertRow(dbName, "Users", queryData);
@@ -279,20 +309,25 @@ public class SQLite_DBManager {
                 {"cStatus", "Inactive"},};
             insertRow(dbName, "Users", queryData);
         }
-
-        //////////////////////// IDEA
-        //// Cuando un cajero se logea tiene que elegir la caja en la que va a trabajar, en ese momento cambia el status de la caja, cuando el usuario se desloguea la caja vuelve a estar inactiva
-        // Genera la cantidad de usuarios dispensadores establecidos en BankInfo
-        for (int i = 1; i <= Integer.parseInt(bankInfo[2]); i++) {
+        
+        // Crea los usuarios para los dispensadores basado en la cantidad seleccionada
+        for (int i = 1; i <= Integer.parseInt(bankInfo[2]) ; i++) {
             queryData = new String[][]{
-                {"uUserName", "tickerDispenser" + i},
-                {"uName", "Dispensador"},
+                {"uUsername", "dispenser" + i},
+                {"uPassword", "dispenser" + i},
+                {"uName", "Dispenser"},
                 {"uLastName", "" + i},
-                {"uType", "uDispenser"},
+                {"uType", "Dispenser"},
                 {"uStatus", "Active"}
             };
             insertRow(dbName, "Users", queryData);
         }
+        
+
+        //////////////////////// IDEA
+        //// Cuando un cajero se logea tiene que elegir la caja en la que va a trabajar, en ese momento cambia el status de la caja, cuando el usuario se desloguea la caja vuelve a estar inactiva
+        // Genera la cantidad de usuarios dispensadores establecidos en BankInfo
+        
     }
     
 }

@@ -29,18 +29,18 @@ public class W_Dispenser extends javax.swing.JFrame {
         java.awt.GridBagConstraints gridBagConstraints;
 
         lbl_Title = new javax.swing.JLabel();
-        tf_IDNumber = new presets.Custom_TextField();
-        btn_Number1 = new presets.Custom_Button();
-        btn_Number2 = new presets.Custom_Button();
-        btn_Number3 = new presets.Custom_Button();
-        btn_Number4 = new presets.Custom_Button();
-        btn_Number5 = new presets.Custom_Button();
-        btn_Number6 = new presets.Custom_Button();
-        btn_Number7 = new presets.Custom_Button();
-        btn_Number8 = new presets.Custom_Button();
-        btn_Number9 = new presets.Custom_Button();
-        btn_Number0 = new presets.Custom_Button();
-        btn_DeleteNumber = new presets.Custom_Button();
+        tf_IDNumber = new presets.CM_TextField();
+        btn_Number1 = new presets.CM_Button();
+        btn_Number2 = new presets.CM_Button();
+        btn_Number3 = new presets.CM_Button();
+        btn_Number4 = new presets.CM_Button();
+        btn_Number5 = new presets.CM_Button();
+        btn_Number6 = new presets.CM_Button();
+        btn_Number7 = new presets.CM_Button();
+        btn_Number8 = new presets.CM_Button();
+        btn_Number9 = new presets.CM_Button();
+        btn_Number0 = new presets.CM_Button();
+        btn_DeleteNumber = new presets.CM_Button();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(null);
@@ -214,18 +214,18 @@ public class W_Dispenser extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private presets.Custom_Button btn_DeleteNumber;
-    private presets.Custom_Button btn_Number0;
-    private presets.Custom_Button btn_Number1;
-    private presets.Custom_Button btn_Number2;
-    private presets.Custom_Button btn_Number3;
-    private presets.Custom_Button btn_Number4;
-    private presets.Custom_Button btn_Number5;
-    private presets.Custom_Button btn_Number6;
-    private presets.Custom_Button btn_Number7;
-    private presets.Custom_Button btn_Number8;
-    private presets.Custom_Button btn_Number9;
+    private presets.CM_Button btn_DeleteNumber;
+    private presets.CM_Button btn_Number0;
+    private presets.CM_Button btn_Number1;
+    private presets.CM_Button btn_Number2;
+    private presets.CM_Button btn_Number3;
+    private presets.CM_Button btn_Number4;
+    private presets.CM_Button btn_Number5;
+    private presets.CM_Button btn_Number6;
+    private presets.CM_Button btn_Number7;
+    private presets.CM_Button btn_Number8;
+    private presets.CM_Button btn_Number9;
     private javax.swing.JLabel lbl_Title;
-    private presets.Custom_TextField tf_IDNumber;
+    private presets.CM_TextField tf_IDNumber;
     // End of variables declaration//GEN-END:variables
 }
