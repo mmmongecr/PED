@@ -195,5 +195,95 @@ public class SQLite_DBManager {
         }
         closeDB();
     }
+
+    //Metodo dinamico para el SELECT
+    public synchronized ResultSet dynamicSelect(String dbName, String tableName, String[] columns, String condition) {
+        connectDB(dbName);
+        ResultSet rs = null;
+        try (Statement stmt = conn.createStatement()) {
+            StringBuilder sql = new StringBuilder("SELECT ");
+            if (columns == null || columns.length == 0) {
+                sql.append("*");
+            } else {
+                for (int i = 0; i < columns.length; i++) {
+                    sql.append(columns[i]);
+                    if (i < columns.length - 1) {
+                        sql.append(", ");
+                    }
+                }
+            }
+            sql.append(" FROM ").append(tableName);
+            if (condition != null && !condition.isEmpty()) {
+                sql.append(" WHERE ").append(condition);
+            }
+            
+            rs = stmt.executeQuery(sql.toString());
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return rs;
+    }
+
+
+    //Metodo dinamico para el UPDATE
+
+    public synchronized void dynamicUpdate(String dbName, String tableName, String[][] updates, String condition) {
+        connectDB(dbName);
+        try (Statement stmt = conn.createStatement()) {
+            StringBuilder sql = new StringBuilder("UPDATE ").append(tableName).append(" SET ");
+            for (int i = 0; i < updates.length; i++) {
+                sql.append(updates[i][0]).append(" = '").append(updates[i][1]).append("'");
+                if (i < updates.length - 1) {
+                    sql.append(", ");
+                }
+            }
+            if (condition != null && !condition.isEmpty()) {
+                sql.append(" WHERE ").append(condition);
+            }
+            
+            stmt.executeUpdate(sql.toString());
+            System.out.println("Datos actualizados.");
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        closeDB();
+    }
+
+    // Metodo dinamico con AGRUPACION
+    public synchronized ResultSet dynamicSelectWithGroupBy(String dbName, String tableName, String[] columns, String condition, String groupBy) {
+        connectDB(dbName);
+        ResultSet rs = null;
+        try (Statement stmt = conn.createStatement()) {
+            StringBuilder sql = new StringBuilder("SELECT ");
+            if (columns == null || columns.length == 0) {
+                sql.append("*");
+            } else {
+                for (int i = 0; i < columns.length; i++) {
+                    sql.append(columns[i]);
+                    if (i < columns.length - 1) {
+                        sql.append(", ");
+                    }
+                }
+            }
+            sql.append(" FROM ").append(tableName);
+            if (condition != null && !condition.isEmpty()) {
+                sql.append(" WHERE ").append(condition);
+            }
+            if (groupBy != null && !groupBy.isEmpty()) {
+                sql.append(" GROUP BY ").append(groupBy);
+            }
+            
+            rs = stmt.executeQuery(sql.toString());
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return rs;
+    }
+    
+    
+    
+
+
+
     
 }
