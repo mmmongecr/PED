@@ -29,6 +29,7 @@ public class Card_BS_NewBank extends javax.swing.JPanel {
     public void showCard(JPanel parentPanel){
         this.parentPanel = parentPanel;
         initComponents();
+        setVisible(true);
         
     }
 

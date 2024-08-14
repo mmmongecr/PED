@@ -58,10 +58,10 @@ public class W_BankSelector extends javax.swing.JFrame {
         for (int i = 0; i < 10; i++) {
             try {
                 cardLayout.show(pnl_cards, "newBank");
-                revalidate();
+                revalidate(); repaint();
                 TimeUnit.SECONDS.sleep(1);
                 cardLayout.show(pnl_cards, "pickABank");
-                revalidate();
+                revalidate(); repaint();
             } catch (InterruptedException ex) {
                 Logger.getLogger(W_BankSelector.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -73,6 +73,7 @@ public class W_BankSelector extends javax.swing.JFrame {
             card_NewBank.showCard(pnl_cards);
             cardLayout.show(pnl_cards, "newBank");
             System.out.println("gui.W_BankSelector.checkBankSites()");
+            revalidate(); repaint();
         }else if (0 < sites.length){ // Si encuentra muestra el selector de bancos
             for (int i = 0; i < sites.length; i++) {
             sites[i] = sites[i].replace(".ped", "");
@@ -80,6 +81,7 @@ public class W_BankSelector extends javax.swing.JFrame {
         }
             card_PickABank.showCard(sites, pnl_cards, this);
             cardLayout.show(pnl_cards, "pickABank");
+            revalidate(); repaint();
         }
         
     }

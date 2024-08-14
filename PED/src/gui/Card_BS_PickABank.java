@@ -34,6 +34,7 @@ public class Card_BS_PickABank extends javax.swing.JPanel {
         this.parentFrame = parentFrame;
         this.parentPanel = parentPanel;
         cb_BankNames.setModel(new DefaultComboBoxModel(banks){});
+        setVisible(true);
     }
 
     /**
@@ -52,7 +53,10 @@ public class Card_BS_PickABank extends javax.swing.JPanel {
         btn_initSystem = new presets.CM_Button();
         btn_newBank = new presets.CM_Button();
 
+        setMaximumSize(null);
+        setMinimumSize(null);
         setOpaque(false);
+        setPreferredSize(new java.awt.Dimension(487, 600));
         setLayout(new java.awt.GridBagLayout());
 
         lbl_Description.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
