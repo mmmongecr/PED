@@ -63,6 +63,29 @@ public class PED {
       */  
         
     }
+
+    // Llamada a dynamicUpdate
+    String[][] updates = {{"status", "Inactive"}};
+    dBManager.dynamicUpdate("Bank_Of_America.ped", "ped_Users", updates, "username = 'manuel.mora'");
+
+    // Llamada a dynamicSelectWithGroupBy
+    String[] groupColumns = {"user_type", "COUNT(*) as user_count"};
+    String groupCondition = "status = 'Active'";
+    String groupBy = "user_type";
+    ResultSet rsGroup = dBManager.dynamicSelectWithGroupBy("Bank_Of_America.ped", "ped_Users", groupColumns, groupCondition, groupBy);
+    
+    try {
+        while (rsGroup != null && rsGroup.next()) {
+            System.out.println("User Type: " + rsGroup.getString("user_type"));
+            System.out.println("User Count: " + rsGroup.getInt("user_count"));
+            System.out.println("----------------------------");
+        }
+    } catch (SQLException e) {
+        System.out.println(e.getMessage());
+    }
+    
+    dBManager.closeDB();
+}
     
     
     
