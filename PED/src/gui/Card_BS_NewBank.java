@@ -55,13 +55,16 @@ public class Card_BS_NewBank extends javax.swing.JPanel {
         tf_adminName = new presets.CM_TextField();
         lbl_password = new javax.swing.JLabel();
         tf_password = new presets.CM_PasswordField();
-        filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 0));
         lbl_name = new javax.swing.JLabel();
         tf_name = new presets.CM_TextField();
         lbl_lastName = new javax.swing.JLabel();
         tf_lastName = new presets.CM_TextField();
         btn_newBank = new presets.CM_Button();
+        filler_top = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 32767));
+        filler_bottom = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 32767));
 
+        setOpaque(false);
+        setPreferredSize(new java.awt.Dimension(470, 595));
         setLayout(new java.awt.GridBagLayout());
 
         lbl_description.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -69,17 +72,17 @@ public class Card_BS_NewBank extends javax.swing.JPanel {
         lbl_description.setMaximumSize(null);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridy = 1;
         gridBagConstraints.gridwidth = 4;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.ipady = 50;
-        gridBagConstraints.insets = new java.awt.Insets(10, 10, 10, 10);
+        gridBagConstraints.insets = new java.awt.Insets(5, 10, 5, 10);
         add(lbl_description, gridBagConstraints);
 
         lbl_bankName.setText("Nombre del banco :");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridy = 2;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.insets = new java.awt.Insets(10, 10, 10, 10);
@@ -91,7 +94,7 @@ public class Card_BS_NewBank extends javax.swing.JPanel {
         tf_bankName.setPreferredSize(null);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridy = 3;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 1.0;
@@ -101,7 +104,7 @@ public class Card_BS_NewBank extends javax.swing.JPanel {
         lbl_counters.setText("<html>Cantidad <br>de cajas :</html>");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridy = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.insets = new java.awt.Insets(10, 10, 10, 10);
         add(lbl_counters, gridBagConstraints);
@@ -111,7 +114,7 @@ public class Card_BS_NewBank extends javax.swing.JPanel {
         cb_counters.setMaximumSize(null);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridy = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 0.5;
         gridBagConstraints.insets = new java.awt.Insets(10, 10, 10, 10);
@@ -120,7 +123,7 @@ public class Card_BS_NewBank extends javax.swing.JPanel {
         lbl_ticketDispensers.setText("<html>Dispensadores <br>de tiquetes :</html>");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
-        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridy = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.insets = new java.awt.Insets(10, 10, 10, 10);
         add(lbl_ticketDispensers, gridBagConstraints);
@@ -130,7 +133,7 @@ public class Card_BS_NewBank extends javax.swing.JPanel {
         cb_dispensers.setMaximumSize(null);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
-        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridy = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 0.5;
         gridBagConstraints.insets = new java.awt.Insets(10, 10, 10, 10);
@@ -141,8 +144,8 @@ public class Card_BS_NewBank extends javax.swing.JPanel {
         jSeparator.setPreferredSize(null);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridwidth = 4;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.insets = new java.awt.Insets(10, 0, 10, 0);
         add(jSeparator, gridBagConstraints);
@@ -150,7 +153,7 @@ public class Card_BS_NewBank extends javax.swing.JPanel {
         lbl_adminName.setText("Nombre de usuario (Admin):");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridy = 5;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.insets = new java.awt.Insets(10, 10, 10, 10);
@@ -162,7 +165,7 @@ public class Card_BS_NewBank extends javax.swing.JPanel {
         tf_adminName.setPreferredSize(null);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridy = 6;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 1.0;
@@ -172,7 +175,7 @@ public class Card_BS_NewBank extends javax.swing.JPanel {
         lbl_password.setText("Contraseña: ");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridy = 5;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.insets = new java.awt.Insets(10, 10, 10, 10);
@@ -184,23 +187,16 @@ public class Card_BS_NewBank extends javax.swing.JPanel {
         tf_password.setPreferredSize(null);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridy = 6;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.insets = new java.awt.Insets(10, 10, 10, 10);
         add(tf_password, gridBagConstraints);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 6;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(0, 30, 50, 30);
-        add(filler1, gridBagConstraints);
 
         lbl_name.setText("Nombre");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 6;
+        gridBagConstraints.gridy = 7;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.insets = new java.awt.Insets(10, 10, 10, 10);
@@ -212,7 +208,7 @@ public class Card_BS_NewBank extends javax.swing.JPanel {
         tf_name.setPreferredSize(null);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 7;
+        gridBagConstraints.gridy = 8;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 1.0;
@@ -222,7 +218,7 @@ public class Card_BS_NewBank extends javax.swing.JPanel {
         lbl_lastName.setText("Apellido");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 6;
+        gridBagConstraints.gridy = 7;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.insets = new java.awt.Insets(10, 10, 10, 10);
@@ -234,7 +230,7 @@ public class Card_BS_NewBank extends javax.swing.JPanel {
         tf_lastName.setPreferredSize(null);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 7;
+        gridBagConstraints.gridy = 8;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 1.0;
@@ -242,17 +238,34 @@ public class Card_BS_NewBank extends javax.swing.JPanel {
         add(tf_lastName, gridBagConstraints);
 
         btn_newBank.setText("Registrar banco");
+        btn_newBank.setMaximumSize(new java.awt.Dimension(305, 40));
+        btn_newBank.setMinimumSize(new java.awt.Dimension(105, 40));
+        btn_newBank.setPreferredSize(null);
         btn_newBank.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_newBankActionPerformed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 8;
-        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 9;
+        gridBagConstraints.gridwidth = 4;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         add(btn_newBank, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 4;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 0.2;
+        add(filler_top, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 10;
+        gridBagConstraints.gridwidth = 4;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 0.2;
+        add(filler_bottom, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_newBankActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_newBankActionPerformed
@@ -297,7 +310,8 @@ public class Card_BS_NewBank extends javax.swing.JPanel {
     private presets.CM_Button btn_newBank;
     private presets.CM_ComboBox cb_counters;
     private presets.CM_ComboBox cb_dispensers;
-    private javax.swing.Box.Filler filler1;
+    private javax.swing.Box.Filler filler_bottom;
+    private javax.swing.Box.Filler filler_top;
     private javax.swing.JSeparator jSeparator;
     private javax.swing.JLabel lbl_adminName;
     private javax.swing.JLabel lbl_bankName;

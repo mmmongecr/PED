@@ -5,11 +5,9 @@
 package gui;
 
 import data.Settings.App_Settings;
-import java.awt.CardLayout;
 import java.awt.GridBagConstraints;
-import java.util.concurrent.TimeUnit;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 /**
  * @author manuel.mora
@@ -22,40 +20,46 @@ public class W_BankSelector extends javax.swing.JFrame {
     
     private App_Settings appSettings;
     private GridBagConstraints gbc;
+    private Card_BS_NewBank card_NewBank;
+    private Card_BS_PickABank card_PickABank;
     
     public W_BankSelector(App_Settings appSettings) {
         
         this.appSettings = appSettings;
         setLocationRelativeTo(null);
+        
         initComponents();
+        
+        pnl_StatusBar.showPanel(appSettings);
+        pnl_Container.showPanel("bg2.png");
+        
         checkBankSites();
         
         
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
+        /*java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 //new W_Login(appSettings).setVisible(true);
             }
-        });
+        });*/
         
         
-        pnl_StatusBar.showPanel(appSettings);
-        pnl_Container.showPanel("bg3.png");
         
         repaint();
         revalidate();
-        setVisible(true);
+        
         
         
     }
     
     private void checkBankSites() {
         
+        setVisible(true);
+        
         // Verifica si existen Db para bancos
         String [] sites = appSettings.checkBankSites();
-        CardLayout cardLayout = (CardLayout) pnl_cards.getLayout();
         
-        for (int i = 0; i < 10; i++) {
+        /*for (int i = 0; i < 10; i++) {
             try {
                 cardLayout.show(pnl_cards, "newBank");
                 revalidate(); repaint();
@@ -65,28 +69,28 @@ public class W_BankSelector extends javax.swing.JFrame {
             } catch (InterruptedException ex) {
                 Logger.getLogger(W_BankSelector.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }
-        
+        }*/
+        pnl_cards.add(new JLabel(""));
         
         
         if (sites == null) { // Si no encuentra muestra ventana de nuevo banco
+            
+            card_NewBank = new Card_BS_NewBank();
             card_NewBank.showCard(pnl_cards);
-            cardLayout.show(pnl_cards, "newBank");
-            System.out.println("gui.W_BankSelector.checkBankSites()");
-            revalidate(); repaint();
-        }else if (0 < sites.length){ // Si encuentra muestra el selector de bancos
-            for (int i = 0; i < sites.length; i++) {
-            sites[i] = sites[i].replace(".ped", "");
-            sites[i] = sites[i].replace("_", " ");   
-        }
+            changeCard(card_NewBank);
+        }else if (0 < sites.length) { // Si encuentra muestra el selector de bancos
+            card_PickABank = new Card_BS_PickABank();
             card_PickABank.showCard(sites, pnl_cards, this);
-            cardLayout.show(pnl_cards, "pickABank");
-            revalidate(); repaint();
+            changeCard(card_PickABank);
         }
         
     }
     
-    
+    public void changeCard(JPanel card){
+        pnl_cards.remove(1);
+        pnl_cards.add(card);
+        revalidate(); repaint();
+    }
     
 
     /**
@@ -100,11 +104,9 @@ public class W_BankSelector extends javax.swing.JFrame {
 
         pnl_StatusBar = new presets.CM_StatusBar();
         pnl_Container = new presets.CM_Panel();
-        p_container = new javax.swing.JPanel();
-        lbl_Title = new javax.swing.JLabel();
+        p_container = new javax.swing.JScrollPane();
         pnl_cards = new javax.swing.JPanel();
-        card_NewBank = new gui.Card_BS_NewBank();
-        card_PickABank = new gui.Card_BS_PickABank();
+        lbl_Title = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Sistema de registro");
@@ -119,12 +121,16 @@ public class W_BankSelector extends javax.swing.JFrame {
         pnl_StatusBar.setPreferredSize(new java.awt.Dimension(975, 25));
         getContentPane().add(pnl_StatusBar, java.awt.BorderLayout.SOUTH);
 
-        pnl_Container.setPreferredSize(new java.awt.Dimension(975, 525));
+        pnl_Container.setPreferredSize(new java.awt.Dimension(485, 600));
         pnl_Container.setLayout(new java.awt.BorderLayout());
 
-        p_container.setOpaque(false);
-        p_container.setPreferredSize(new java.awt.Dimension(485, 575));
-        p_container.setLayout(new java.awt.BorderLayout());
+        p_container.setMaximumSize(null);
+        p_container.setMinimumSize(null);
+        p_container.setPreferredSize(new java.awt.Dimension(485, 595));
+
+        pnl_cards.setOpaque(false);
+        pnl_cards.setPreferredSize(new java.awt.Dimension(485, 595));
+        pnl_cards.setLayout(new java.awt.BorderLayout());
 
         lbl_Title.setFont(new java.awt.Font("Candara", 1, 24)); // NOI18N
         lbl_Title.setForeground(new java.awt.Color(0, 204, 204));
@@ -132,27 +138,9 @@ public class W_BankSelector extends javax.swing.JFrame {
         lbl_Title.setText("Bienvenido a nuestro sistema");
         lbl_Title.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         lbl_Title.setPreferredSize(new java.awt.Dimension(500, 50));
-        p_container.add(lbl_Title, java.awt.BorderLayout.PAGE_START);
+        pnl_cards.add(lbl_Title, java.awt.BorderLayout.PAGE_START);
 
-        pnl_cards.setOpaque(false);
-        pnl_cards.setPreferredSize(new java.awt.Dimension(485, 525));
-        pnl_cards.setLayout(new java.awt.CardLayout());
-        pnl_cards.add(card_NewBank, "newBank");
-
-        javax.swing.GroupLayout card_PickABankLayout = new javax.swing.GroupLayout(card_PickABank);
-        card_PickABank.setLayout(card_PickABankLayout);
-        card_PickABankLayout.setHorizontalGroup(
-            card_PickABankLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 485, Short.MAX_VALUE)
-        );
-        card_PickABankLayout.setVerticalGroup(
-            card_PickABankLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 475, Short.MAX_VALUE)
-        );
-
-        pnl_cards.add(card_PickABank, "pickABank");
-
-        p_container.add(pnl_cards, java.awt.BorderLayout.CENTER);
+        p_container.setViewportView(pnl_cards);
 
         pnl_Container.add(p_container, java.awt.BorderLayout.EAST);
 
@@ -164,10 +152,8 @@ public class W_BankSelector extends javax.swing.JFrame {
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private gui.Card_BS_NewBank card_NewBank;
-    private gui.Card_BS_PickABank card_PickABank;
     private javax.swing.JLabel lbl_Title;
-    private javax.swing.JPanel p_container;
+    private javax.swing.JScrollPane p_container;
     private presets.CM_Panel pnl_Container;
     private presets.CM_StatusBar pnl_StatusBar;
     private javax.swing.JPanel pnl_cards;
