@@ -8,8 +8,12 @@ import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+
 
 /**
  * @author Manuel Mora Monge
@@ -329,7 +333,6 @@ public class SQLite_DBManager {
         // Genera la cantidad de usuarios dispensadores establecidos en BankInfo
         
     }
-
     //Metodo dinamico para el SELECT
     public synchronized ResultSet dynamicSelect(String dbName, String tableName, String[] columns, String condition) {
         connectDB(dbName);
@@ -360,7 +363,6 @@ public class SQLite_DBManager {
 
 
     //Metodo dinamico para el UPDATE
-
     public synchronized void dynamicUpdate(String dbName, String tableName, String[][] updates, String condition) {
         connectDB(dbName);
         try (Statement stmt = conn.createStatement()) {
@@ -413,11 +415,220 @@ public class SQLite_DBManager {
         }
         return rs;
     }
+
+    public synchronized List<Object> dinamycQuery(String dbName, String tableName, String[] selectColumns, String[][] whereClauses, String[] groupByColumns, String[] orderByColumns) {
+        connectDB(dbName);
+
+        String query = "SELECT ";
+
+        // Construye la parte de SELECT
+        if (selectColumns != null && selectColumns.length > 0) {
+            for (int i = 0; i < selectColumns.length; i++) {
+                query += selectColumns[i];
+                if (i < selectColumns.length - 1) {
+                    query += ", ";
+                }
+            }
+        } else {
+            query += "*"; // Si no hay columnas especificadas, selecciona todas
+        }
+
+        query += " FROM " + tableName;
+
+        // Construir la parte del WHERE
+        if (whereClauses != null && whereClauses.length > 0) {
+            query += " WHERE ";
+            for (int i = 0; i < whereClauses.length; i++) {
+                query += whereClauses[i][0] + " " + whereClauses[i][1] + " " + whereClauses[i][2];
+                if (i < whereClauses.length - 1) {
+                    query += " AND ";
+                }
+            }
+        }
+
+        // Construir la parte de GROUP BY
+        if (groupByColumns != null && groupByColumns.length > 0) {
+            query += " GROUP BY ";
+            for (int i = 0; i < groupByColumns.length; i++) {
+                query += groupByColumns[i];
+                if (i < groupByColumns.length - 1) {
+                    query += ", ";
+                }
+            }
+        }
+
+        // Construir la parte de ORDER BY
+        if (orderByColumns != null && orderByColumns.length > 0) {
+            query += " ORDER BY ";
+            for (int i = 0; i < orderByColumns.length; i++) {
+                query += orderByColumns[i];
+                if (i < orderByColumns.length - 1) {
+                    query += ", ";
+                }
+            }
+        }
+
+        /// Resultados del query
+        List<Object> results = new ArrayList<>();
+
+        try (Statement stmt = conn.createStatement()) {
+
+            ResultSet rs = stmt.executeQuery(query);
+
+            // Obtener nombres de columnas
+            int columnCount = rs.getMetaData().getColumnCount();
+            String[][] columsMetaData = new String[columnCount][2];
+            for (int i = 1; i <= columnCount; i++) {
+                columsMetaData[i - 1][0] = rs.getMetaData().getColumnName(i);
+                columsMetaData[i - 1][1] = rs.getMetaData().getColumnTypeName(i);
+                //System.out.println("CHAPI \n" + columsMetaData[i - 1][0] + "     " +  columsMetaData[i - 1][1]);
+                System.out.println("CHAPI \n" + rs.getMetaData().getColumnName(i) + "     " + rs.getMetaData().getColumnTypeName(i) + " .......");
+            }
+            results.add(columsMetaData);
+
+            // Obtener los datos
+            while (rs.next()) {
+                Object[] row = new Object[columnCount];
+                for (int i = 1; i <= columnCount; i++) {
+                    System.out.println("Column name: " + columsMetaData[i - 1][0] + " \t\tColumn Type: " + columsMetaData[i - 1][1]);
+                    try {
+                        // Trae los datos de acuerdo al tipo definido en SQL
+                        switch (columsMetaData[i - 1][1]) {
+                            case "TEXT":
+                                row[i] = rs.getString(columsMetaData[i - 1][0]);
+                                break;
+                            case "INTEGER":
+                                row[i] = rs.getInt(columsMetaData[i - 1][0]);
+                                break;
+                            case "REAL":
+                            case "DECIMAL":
+                                row[i] = rs.getDouble(columsMetaData[i - 1][0]);
+                                break;
+                            case "DATE":
+                                row[i] = rs.getDate(columsMetaData[i - 1][0]);
+                                break;
+                            default:
+                                row[i] = rs.getObject(columsMetaData[i - 1][0]);
+                                break;
+                        }
+                    } catch (ArrayIndexOutOfBoundsException e) {
+                    }
+                }
+                results.add(row);
+            }
+
+            rs.close();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            closeDB();
+        }
+
+        return results;
+    }
     
     
     
+    public synchronized void insertData(String dbName, String tableName, String[] columns, Object[] values) {
+        // Conectar a la base de datos especificada
+        connectDB(dbName);
+
+        // Construye el INSERT con el nombre de la tabla y las columnas
+        String query = "INSERT INTO " + tableName + " (";
+        
+        for (int i = 0; i < columns.length; i++) {
+            query += columns[i];
+            if (i < columns.length - 1) {
+                query += ", ";
+            }
+        }
+
+        query += ") VALUES (";
+
+        // Agrega los placeholders para los valores en el query
+        for (int i = 0; i < values.length; i++) {
+            query += "?";
+            if (i < values.length - 1) {
+                query += ", ";
+            }
+        }
+        query += ")";
+
+        
+        // Añade los valores al query
+        try (PreparedStatement pstmt = conn.prepareStatement(query)) {
+            // Asignar los valores al PreparedStatement según su tipo
+            for (int i = 0; i < values.length; i++) {
+                if (values[i] instanceof String) {
+                    pstmt.setString(i + 1, (String) values[i]);
+                } else if (values[i] instanceof Integer) {
+                    pstmt.setInt(i + 1, (Integer) values[i]);
+                } else if (values[i] instanceof Double) {
+                    pstmt.setDouble(i + 1, (Double) values[i]);
+                } else if (values[i] instanceof java.sql.Date) {
+                    pstmt.setDate(i + 1, (java.sql.Date) values[i]);
+                }
+            }
+            
+            // Ejecuta el insert
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            closeDB();
+        }
+    }
+
+    
+    
+    
+    public synchronized void update(String dbName, String tableName, String[] columns, Object[] values, Object[][] whereClauses) {
+        connectDB(dbName);
+
+        String query = "UPDATE " + tableName + " SET ";
+
+        // Construir la parte del SET
+        for (int i = 0; i < columns.length; i++) {
+            query += columns[i] + " = ?";
+            if (i < columns.length - 1) {
+                query += ", ";
+            }
+        }
+
+        // Construir la parte del WHERE
+        if (whereClauses != null && whereClauses.length > 0) {
+            query += " WHERE ";
+            for (int i = 0; i < whereClauses.length; i++) {
+                query += whereClauses[i][0] + " " + whereClauses[i][1] + " ?";
+                if (i < whereClauses.length - 1) {
+                    query += " AND ";
+                }
+            }
+        }
+
+        try (PreparedStatement pstmt = conn.prepareStatement(query)) {
+
+            // Asignar valores a los placeholders en el SET
+            for (int i = 0; i < values.length; i++) {
+                pstmt.setObject(i + 1, values[i]);
+            }
+
+            // Asignar valores a los placeholders en el WHERE
+            if (whereClauses != null && whereClauses.length > 0) {
+                for (int i = 0; i < whereClauses.length; i++) {
+                    pstmt.setObject(values.length + i + 1, whereClauses[i][2]);
+                }
+            }
+
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            closeDB();
+        }
+    }
 
 
-
     
+        
 }

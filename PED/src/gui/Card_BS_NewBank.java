@@ -20,14 +20,16 @@ public class Card_BS_NewBank extends javax.swing.JPanel {
      * Creates new form Card_BS_NewBank
      */
     JPanel parentPanel;
+    W_BankSelector parentFrame;
     
     
     public Card_BS_NewBank() {
         
     }
     
-    public void showCard(JPanel parentPanel){
+    public void showCard(JPanel parentPanel, W_BankSelector parentFrame){
         this.parentPanel = parentPanel;
+        this.parentFrame = parentFrame;
         initComponents();
         setVisible(true);
         
@@ -160,9 +162,8 @@ public class Card_BS_NewBank extends javax.swing.JPanel {
         add(lbl_adminName, gridBagConstraints);
 
         tf_adminName.setBorder(null);
+        tf_adminName.setMargin(new java.awt.Insets(20, 6, 2, 6));
         tf_adminName.setMaximumSize(null);
-        tf_adminName.setMinimumSize(null);
-        tf_adminName.setPreferredSize(null);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 6;
@@ -237,6 +238,7 @@ public class Card_BS_NewBank extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(10, 10, 10, 10);
         add(tf_lastName, gridBagConstraints);
 
+        btn_newBank.setForeground(new java.awt.Color(255, 255, 255));
         btn_newBank.setText("Registrar banco");
         btn_newBank.setMaximumSize(new java.awt.Dimension(305, 40));
         btn_newBank.setMinimumSize(new java.awt.Dimension(105, 40));
@@ -251,6 +253,7 @@ public class Card_BS_NewBank extends javax.swing.JPanel {
         gridBagConstraints.gridy = 9;
         gridBagConstraints.gridwidth = 4;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.insets = new java.awt.Insets(40, 10, 0, 10);
         add(btn_newBank, gridBagConstraints);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -301,8 +304,7 @@ public class Card_BS_NewBank extends javax.swing.JPanel {
         JOptionPane.showMessageDialog(getParent(),
                 "El nuevo banco ha sido registrado exitosamente!!!", "Registro exitoso", JOptionPane.INFORMATION_MESSAGE);
         
-        CardLayout cardLayout = (CardLayout)parentPanel.getLayout();
-        cardLayout.show(parentPanel, "pickABank");
+        parentFrame.changeCard(2, parentFrame.getAppSettings().checkBankSites());
     }//GEN-LAST:event_btn_newBankActionPerformed
 
 

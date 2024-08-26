@@ -103,7 +103,7 @@
                               <Component id="lbl_Password" alignment="0" max="32767" attributes="0"/>
                               <Component id="tf_Password" max="32767" attributes="0"/>
                           </Group>
-                          <Component id="custom_Button1" min="-2" pref="225" max="-2" attributes="0"/>
+                          <Component id="btn_login" min="-2" pref="225" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
                   </Group>
@@ -123,7 +123,7 @@
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="tf_Password" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="56" max="-2" attributes="0"/>
-                      <Component id="custom_Button1" min="-2" pref="40" max="-2" attributes="0"/>
+                      <Component id="btn_login" min="-2" pref="40" max="-2" attributes="0"/>
                       <EmptySpace pref="94" max="32767" attributes="0"/>
                   </Group>
               </Group>
@@ -167,7 +167,7 @@
                 </Property>
               </Properties>
             </Component>
-            <Component class="presets.CM_Button" name="custom_Button1">
+            <Component class="presets.CM_Button" name="btn_login">
               <Properties>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="null"/>
@@ -180,6 +180,9 @@
                   <Font name="Segoe UI" size="18" style="0"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_loginActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>

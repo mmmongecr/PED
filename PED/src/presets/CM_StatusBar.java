@@ -33,8 +33,8 @@ public class CM_StatusBar extends javax.swing.JPanel {
             lb_User.setText("          ");
             lb_UserType.setText("          ");
         }
-        appSettings.setDollarExchangeRate();
-        lb_DollarExchangeRate.setText("T. Cambio \t \t Venta: " + appSettings.getDollarExchangeRate()[0] + " /  Compra: " + appSettings.getDollarExchangeRate()[1]);
+        //appSettings.setDollarExchangeRate();
+        //lb_DollarExchangeRate.setText("T. Cambio \t \t Venta: " + appSettings.getDollarExchangeRate()[0] + " /  Compra: " + appSettings.getDollarExchangeRate()[1]);
         
         Thread dateTimeThread = new Thread(new Runnable() {
             @Override

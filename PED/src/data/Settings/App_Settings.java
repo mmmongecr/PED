@@ -21,8 +21,10 @@ public class App_Settings {
     private Bank bank;
     private User currentUser;
     private String [] dollarExchangeRate;
+    private SQLite_DBManager sql;
     
     public App_Settings(){
+        sql = new SQLite_DBManager();
     }
 
     
@@ -56,6 +58,12 @@ public class App_Settings {
         dollarExchangeRate[0] = formatter.format(Double.parseDouble(dollarExchangeRate[0]));
         dollarExchangeRate[1] = formatter.format(Double.parseDouble(dollarExchangeRate[1]));
     }
+
+    public SQLite_DBManager getSql() {
+        return sql;
+    }
+    
+    
     
     
     
@@ -107,16 +115,6 @@ public class App_Settings {
             return null; // Devolver null si no se encontraron archivos .pedDB
         }
     }
-    
-    
-    
-    
-    
-    
-    
-    
-
-    
     
     
     

@@ -33,12 +33,12 @@ public class CM_ComboBox<E> extends JComboBox<E> {
         this.arrowIcon          = new ImageIcon("src/assets/CB_Arrow.png").getImage();
         this.itemBackground     = new ImageIcon("src/assets/TextField.png").getImage();
         itemBackground = resizeImage(getSize(), itemBackground);
-        //setUI(new CustomComboBoxUI());
-        //setRenderer(new CustomComboBoxRenderer());
+        setUI(new CustomComboBoxUI());
+        setRenderer(new CustomComboBoxRenderer());
         setOpaque(false);
         
         setRenderer(new TranslucentComboBoxRenderer());
-        setEditor(new TranslucentComboBoxEditor());
+        //setEditor(new TranslucentComboBoxEditor());
         setOpaque(false);
         
         
@@ -53,57 +53,31 @@ public class CM_ComboBox<E> extends JComboBox<E> {
         return img.getScaledInstance(size.width, size.height, Image.SCALE_SMOOTH);
 
     }
-
     
     
-    
-    
-    
-    
-    
-    
-    
-    
+    // Lista del combobox
     private static class TranslucentComboBoxRenderer extends BasicComboBoxRenderer {
         @Override
         public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
             Component c = super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
-            c.setBackground(new Color(255, 255, 255, 128)); // Fondo translúcido
+            c.setBackground(new Color(25, 170, 200, 128)); // Fondo translúcido
             if (isSelected) {
-                c.setBackground(new Color(100, 100, 255, 128)); // Fondo translúcido al estar seleccionado
+                c.setForeground(Color.WHITE);
+                c.setBackground(new Color(10, 100, 120, 255)); // Fondo translúcido al estar seleccionado
             }
-            ((JComponent) c).setOpaque(false);
+            ((JComponent) c).setOpaque(true);
             return c;
         }
     }
 
-    private static class TranslucentComboBoxEditor extends BasicComboBoxEditor {
-        @Override
-        public Component getEditorComponent() {
-            JTextField editor = (JTextField) super.getEditorComponent();
-            editor.setOpaque(false);
-            editor.setBackground(new Color(255, 255, 255, 128)); // Fondo translúcido
-            return editor;
-        }
-    }
+    
 
     @Override
     public void paintComponent(Graphics g) {
         Graphics2D g2 = (Graphics2D) g;
-        g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f)); // Establece la transparencia
+        g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.7f)); // Establece la transparencia
         super.paintComponent(g);
-    }
-    
-    @Override
-    public void setPopupVisible(boolean v) {
-        super.setPopupVisible(v);
-        JComponent popup = (JComponent) getUI().getAccessibleChild(this, 0);
-        if (popup instanceof JPopupMenu) {
-            JList<?> list = (JList<?>) ((JScrollPane) ((JPopupMenu) popup).getComponent(0)).getViewport().getView();
-            list.setBackground(new Color(255, 255, 255, 128)); // Fondo translúcido del popup
-            list.setOpaque(false);
-        }
-    }
+    }    
     
     
     
@@ -130,10 +104,7 @@ public class CM_ComboBox<E> extends JComboBox<E> {
     
     
     
-    
-    
-    /*
-    
+    // Flecha
     private class CustomComboBoxUI extends BasicComboBoxUI {
         @Override
         protected JButton createArrowButton() {
@@ -154,15 +125,41 @@ public class CM_ComboBox<E> extends JComboBox<E> {
             resizeImage(getSize(), background);
             // g.drawImage (Imagen, posición x, posición y, ancho, largo, objeto)
             g.drawImage(background, 1, 1, c.getWidth()-3, c.getHeight()-3, c);
-            c.setBackground(new Color(0, 0, 0, 0));
-            c.setOpaque(true);
+            c.setBackground(new Color(154, 198, 216, 128));
+            c.setOpaque(false);
+            
+            
+            
+            
+            
             super.paint(g, c);
         }
+        
+        
+        /*@Override
+        public void paintCurrentValueBackground(Graphics g, Rectangle bounds, boolean hasFocus) {
+            Color backgroundColor;
+
+            if (hasFocus) {
+                // Cambia el fondo cuando el JComboBox tiene el foco
+                backgroundColor = new Color(0, 0, 0, 0); // Fondo translúcido con foco
+            } else if (comboBox.getSelectedIndex() != -1) {
+                // Cambia el fondo cuando un ítem está seleccionado
+                backgroundColor = new Color(0, 0, 0, 0); // Fondo translúcido con item seleccionado
+            } else {
+                // Fondo por defecto cuando no hay selección ni foco
+                backgroundColor = new Color(0, 0, 0, 0);
+            }
+
+            g.setColor(backgroundColor);
+            g.fillRect(bounds.x, bounds.y, bounds.width, bounds.height);
+        }*/
+
         
         @Override
         public Insets getInsets() {
             // Definir los insets hard-coded
-            return new Insets(10, 10, 10, 10); // Márgenes de 10 píxeles en cada lado
+            return new Insets(12, 12, 12, 12); // Márgenes de 10 píxeles en cada lado
         }
     }
     
@@ -204,7 +201,7 @@ public class CM_ComboBox<E> extends JComboBox<E> {
     }
     
     
-    */
+    
     
     
 }

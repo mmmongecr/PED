@@ -31,7 +31,7 @@ public class W_BankSelector extends javax.swing.JFrame {
         initComponents();
         
         pnl_StatusBar.showPanel(appSettings);
-        pnl_Container.showPanel("bg2.png");
+        pnl_Main.showPanel("bg2.png");
         
         checkBankSites();
         
@@ -59,38 +59,39 @@ public class W_BankSelector extends javax.swing.JFrame {
         // Verifica si existen Db para bancos
         String [] sites = appSettings.checkBankSites();
         
-        /*for (int i = 0; i < 10; i++) {
-            try {
-                cardLayout.show(pnl_cards, "newBank");
-                revalidate(); repaint();
-                TimeUnit.SECONDS.sleep(1);
-                cardLayout.show(pnl_cards, "pickABank");
-                revalidate(); repaint();
-            } catch (InterruptedException ex) {
-                Logger.getLogger(W_BankSelector.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }*/
         pnl_cards.add(new JLabel(""));
         
-        
         if (sites == null) { // Si no encuentra muestra ventana de nuevo banco
-            
-            card_NewBank = new Card_BS_NewBank();
-            card_NewBank.showCard(pnl_cards);
-            changeCard(card_NewBank);
+            changeCard(1, null);
         }else if (0 < sites.length) { // Si encuentra muestra el selector de bancos
-            card_PickABank = new Card_BS_PickABank();
-            card_PickABank.showCard(sites, pnl_cards, this);
-            changeCard(card_PickABank);
+            changeCard(2, sites);
         }
         
     }
     
-    public void changeCard(JPanel card){
-        pnl_cards.remove(1);
-        pnl_cards.add(card);
-        revalidate(); repaint();
+    public void changeCard(int cardID, String [] sites){
+        p_container.remove(0);
+        switch (cardID) {
+            case 1:
+                card_NewBank = new Card_BS_NewBank();
+                card_NewBank.showCard(p_container, this);
+                p_container.add(card_NewBank, "Center");
+                break;
+            case 2:
+                card_PickABank = new Card_BS_PickABank();
+                card_PickABank.showCard(sites, pnl_cards, this);
+                p_container.add(card_PickABank, "Center");
+                break;
+        }
+        revalidate();
+        repaint();
     }
+
+    public App_Settings getAppSettings() {
+        return appSettings;
+    }
+    
+    
     
 
     /**
@@ -103,9 +104,10 @@ public class W_BankSelector extends javax.swing.JFrame {
     private void initComponents() {
 
         pnl_StatusBar = new presets.CM_StatusBar();
-        pnl_Container = new presets.CM_Panel();
-        p_container = new javax.swing.JScrollPane();
+        pnl_Main = new presets.CM_Panel();
+        p_container12 = new javax.swing.JScrollPane();
         pnl_cards = new javax.swing.JPanel();
+        p_container = new javax.swing.JPanel();
         lbl_Title = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -121,16 +123,22 @@ public class W_BankSelector extends javax.swing.JFrame {
         pnl_StatusBar.setPreferredSize(new java.awt.Dimension(975, 25));
         getContentPane().add(pnl_StatusBar, java.awt.BorderLayout.SOUTH);
 
-        pnl_Container.setPreferredSize(new java.awt.Dimension(485, 600));
-        pnl_Container.setLayout(new java.awt.BorderLayout());
+        pnl_Main.setPreferredSize(new java.awt.Dimension(485, 605));
+        pnl_Main.setLayout(new java.awt.BorderLayout());
 
-        p_container.setMaximumSize(null);
-        p_container.setMinimumSize(null);
-        p_container.setPreferredSize(new java.awt.Dimension(485, 595));
+        p_container12.setMaximumSize(null);
+        p_container12.setMinimumSize(null);
+        p_container12.setPreferredSize(new java.awt.Dimension(485, 595));
 
         pnl_cards.setOpaque(false);
         pnl_cards.setPreferredSize(new java.awt.Dimension(485, 595));
         pnl_cards.setLayout(new java.awt.BorderLayout());
+        p_container12.setViewportView(pnl_cards);
+
+        pnl_Main.add(p_container12, java.awt.BorderLayout.EAST);
+
+        p_container.setPreferredSize(new java.awt.Dimension(485, 605));
+        p_container.setLayout(new java.awt.BorderLayout());
 
         lbl_Title.setFont(new java.awt.Font("Candara", 1, 24)); // NOI18N
         lbl_Title.setForeground(new java.awt.Color(0, 204, 204));
@@ -138,13 +146,11 @@ public class W_BankSelector extends javax.swing.JFrame {
         lbl_Title.setText("Bienvenido a nuestro sistema");
         lbl_Title.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         lbl_Title.setPreferredSize(new java.awt.Dimension(500, 50));
-        pnl_cards.add(lbl_Title, java.awt.BorderLayout.PAGE_START);
+        p_container.add(lbl_Title, java.awt.BorderLayout.NORTH);
 
-        p_container.setViewportView(pnl_cards);
+        pnl_Main.add(p_container, java.awt.BorderLayout.EAST);
 
-        pnl_Container.add(p_container, java.awt.BorderLayout.EAST);
-
-        getContentPane().add(pnl_Container, java.awt.BorderLayout.NORTH);
+        getContentPane().add(pnl_Main, java.awt.BorderLayout.NORTH);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -153,8 +159,9 @@ public class W_BankSelector extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel lbl_Title;
-    private javax.swing.JScrollPane p_container;
-    private presets.CM_Panel pnl_Container;
+    private javax.swing.JPanel p_container;
+    private javax.swing.JScrollPane p_container12;
+    private presets.CM_Panel pnl_Main;
     private presets.CM_StatusBar pnl_StatusBar;
     private javax.swing.JPanel pnl_cards;
     // End of variables declaration//GEN-END:variables

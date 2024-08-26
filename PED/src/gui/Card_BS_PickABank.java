@@ -21,15 +21,14 @@ public class Card_BS_PickABank extends javax.swing.JPanel {
      * Creates new form Card_BS_NewBank
      */
     
-    private JFrame parentFrame;
+    private W_BankSelector parentFrame;
     private JPanel parentPanel;
-    private App_Settings appSettings;
     
     public Card_BS_PickABank() {
         
     }
     
-    public void showCard(String [] banks, JPanel parentPanel, JFrame parentFrame){
+    public void showCard(String [] banks, JPanel parentPanel, W_BankSelector parentFrame){
         initComponents();
         this.parentFrame = parentFrame;
         this.parentPanel = parentPanel;
@@ -159,16 +158,12 @@ public class Card_BS_PickABank extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_initSystemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_initSystemActionPerformed
-
-        W_Login login = new W_Login(appSettings);
+        W_Login login = new W_Login(parentFrame.getAppSettings());
         parentFrame.dispose();
-
     }//GEN-LAST:event_btn_initSystemActionPerformed
 
     private void btn_newBankActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_newBankActionPerformed
-        //CardLayout cardlayout = (CardLayout)parentPanel.getLayout();
-        //cardlayout.show(parentPanel, "newBank");
-
+        parentFrame.changeCard(1, null);
     }//GEN-LAST:event_btn_newBankActionPerformed
 
 
