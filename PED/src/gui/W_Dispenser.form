@@ -112,7 +112,7 @@
                 </Constraint>
               </Constraints>
             </Component>
-            <Component class="javax.swing.JLabel" name="lbl_clientType">
+            <Component class="javax.swing.JLabel" name="lbl_procedureType">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Tr&#xe1;mite"/>
               </Properties>
@@ -122,7 +122,7 @@
                 </Constraint>
               </Constraints>
             </Component>
-            <Component class="presets.CM_ComboBox" name="cb_clientType">
+            <Component class="presets.CM_ComboBox" name="cb_procedureType">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                   <StringArray count="4">
@@ -145,7 +145,7 @@
                 </Constraint>
               </Constraints>
             </Component>
-            <Component class="javax.swing.JLabel" name="lbl_procedureType">
+            <Component class="javax.swing.JLabel" name="lbl_clientType">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Cu&#xe1;ntos tr&#xe1;mites necesita realizar:"/>
               </Properties>
@@ -155,7 +155,7 @@
                 </Constraint>
               </Constraints>
             </Component>
-            <Component class="presets.CM_ComboBox" name="cb_procedureType">
+            <Component class="presets.CM_ComboBox" name="cb_clientType">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                   <StringArray count="3">

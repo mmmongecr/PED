@@ -3,14 +3,38 @@
 package data.QueueManagement;
 
 import data.InfoObjetcs.Ticket;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class Queue {
     
-
+    private String name;
     private Node headNode; 
     private Node lastNode; 
+
+    public Queue(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+    
+    public int getNodesQTY(){
+        int nodesQTY = 0;
+        if (headNode == null) {
+            nodesQTY = 0;
+        }else {
+            Node auxNode = headNode;
+            do {
+                nodesQTY ++;
+                auxNode = auxNode.getNextNode();
+            } while (auxNode != null);
+        }
+        return nodesQTY;
+    }
 
     // Agrega Tickets al queue ordenado por el ticketID
     public void joinQueue(Ticket newTicket) {
@@ -118,6 +142,34 @@ public class Queue {
         }
         return true; // Nodo eliminado con éxito
     }
+    
+    public List<String[]> getQueueInfo(){
+        List<String[]> queueInfo = new ArrayList<>();
+        
+        Node auxNode = headNode;
+        if (headNode == null) {
+            return null;
+        }
+        do {
+            String [] ticket = new String[3];
+            ticket[0] = auxNode.getTicket().getTicketID() + "";
+            ticket[1] = auxNode.getTicket().getProcedureType();
+            ticket[2] = auxNode.getTicket().getClientType() + "";
+                    
+            queueInfo.add(ticket);
+            auxNode = auxNode.getNextNode();
+        } while (auxNode != null);
+        return queueInfo;
+    }
+    
+    public int getNewTicketID(){
+        int newTicketID = 1;
+        if (lastNode != null) {
+            newTicketID = lastNode.getTicket().getTicketID() + 1;
+        }
+        return newTicketID;
+    }
+    
 
     @Override
     public String toString() {

@@ -7,12 +7,6 @@ public class Node {
     private Ticket ticket;
     private Node nextNode, previousNode;
     
-
-    public Node() {
-        this.ticket = null;
-        nextNode = null;
-    }
-    
     public Node(Ticket ticket) {
         this.ticket = ticket;
         nextNode = null;

@@ -101,32 +101,82 @@ public class W_Dispenser extends javax.swing.JFrame implements ActionListener{
             {
                 // Si se presiona Ok se procede a crear un ticket
                 char clientType = 'z';
+                int assignedCounter = 0;
+                System.out.println(" TTTTTTTTTTTTTTTTESTTTTTT - " +  cb_clientType.getSelectedItem().toString());
                 switch (cb_clientType.getSelectedItem().toString()) {
+                    //"", "", ""
                     case "Preferencial":
                         clientType = 'P';
+                        // Añade el ticket a la casa preferencuial
+                        assignedCounter = 0;
+                        appSettings.getCounter(1).joinQueue(
+                                new Ticket(
+                                        appSettings.getCounter(assignedCounter).getNewTicketID(), // ticketID
+                                        null, // clientAge (suponiendo que lo asignas como 0)
+                                        tf_clientID.getText(), // clientID
+                                        clientName, // clientName
+                                        cb_clientType.getSelectedItem().toString(), // procedureType
+                                        "Pendiente", // procedureStatus
+                                        new Date(), // creationTime
+                                        null, // attentionTime (asumiendo que puede ser null)
+                                        clientType, // clientType
+                                        "" + assignedCounter+1,
+                                        appSettings // app_Settings
+                                )
+                        );
+                        
                         break;
                     case "Solo un trámite":
                         clientType = 'A';
+                        assignedCounter = 1;
+                        appSettings.getCounter(assignedCounter).joinQueue(
+                                new Ticket(
+                                        appSettings.getCounter(1).getNewTicketID(), // ticketID
+                                        null, // clientAge (suponiendo que lo asignas como 0)
+                                        tf_clientID.getText(), // clientID
+                                        clientName, // clientName
+                                        cb_clientType.getSelectedItem().toString(), // procedureType
+                                        "Pendiente", // procedureStatus
+                                        new Date(), // creationTime
+                                        null, // attentionTime (asumiendo que puede ser null)
+                                        clientType, // clientType
+                                        "" + assignedCounter+1,
+                                        appSettings // app_Settings
+                                )
+                        );
                         break;
                     case "Dos o más trámites":
                         clientType = 'B';
+                        assignedCounter = appSettings.getLessBusyCounter();
+                        appSettings.getCounter(assignedCounter).joinQueue(
+                                new Ticket(
+                                        appSettings.getCounter(1).getNewTicketID(), // ticketID
+                                        null, // clientAge (suponiendo que lo asignas como 0)
+                                        tf_clientID.getText(), // clientID
+                                        clientName, // clientName
+                                        cb_clientType.getSelectedItem().toString(), // procedureType
+                                        "Pendiente", // procedureStatus
+                                        new Date(), // creationTime
+                                        null, // attentionTime (asumiendo que puede ser null)
+                                        clientType, // clientType
+                                        "" + assignedCounter,
+                                        appSettings // app_Settings
+                                )
+                        );
+                        
                         break;
                 }
-                appSettings.getQueue().joinQueue(
-                        new Ticket(
-                                Integer.parseInt(tf_clientID.getText()) , 
-                                0, 
-                                clientName, 
-                                cb_procedureType.getSelectedItem().toString(), 
-                                "Pendiente", 
-                                new Date(), 
-                                null, clientType,appSettings));
+                String message = clientName + " su tiquete creado exítosamente!!!\n"
+                        + "Su trámite será atentido en la caja " + (assignedCounter+1) + "\n"
+                        + "Por favor espere a ser atentido.\n\n"
+                        + "Gracias.";
                 
-                
+                JOptionPane.showMessageDialog(this, message, "Tiquete creado", JOptionPane.INFORMATION_MESSAGE);
                 
             } else { // En caso de presionar cancelar se reinicia el ID del cliente para intentar de nuevo
                 tf_clientID.setText("");
             }
+            
             tf_clientID.setText("");
         }
     }
@@ -150,10 +200,10 @@ public class W_Dispenser extends javax.swing.JFrame implements ActionListener{
         pnl_Main = new presets.CM_Panel();
         p_container = new javax.swing.JPanel();
         lbl_Title = new javax.swing.JLabel();
-        lbl_clientType = new javax.swing.JLabel();
-        cb_clientType = new presets.CM_ComboBox();
         lbl_procedureType = new javax.swing.JLabel();
         cb_procedureType = new presets.CM_ComboBox();
+        lbl_clientType = new javax.swing.JLabel();
+        cb_clientType = new presets.CM_ComboBox();
         separator1 = new javax.swing.JSeparator();
         lbl_clientID = new javax.swing.JLabel();
         tf_clientID = new presets.CM_TextField();
@@ -206,39 +256,39 @@ public class W_Dispenser extends javax.swing.JFrame implements ActionListener{
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
         p_container.add(lbl_Title, gridBagConstraints);
 
-        lbl_clientType.setText("Trámite");
+        lbl_procedureType.setText("Trámite");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
-        p_container.add(lbl_clientType, gridBagConstraints);
-
-        cb_clientType.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Depósito", "Retiro", "Cambio de Divisas", "Trámite multiple" }));
-        cb_clientType.setMaximumSize(null);
-        cb_clientType.setPreferredSize(new java.awt.Dimension(150, 46));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
-        p_container.add(cb_clientType, gridBagConstraints);
-
-        lbl_procedureType.setText("Cuántos trámites necesita realizar:");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
         p_container.add(lbl_procedureType, gridBagConstraints);
 
-        cb_procedureType.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Preferencial", "Solo un trámite", "Dos o más trámites" }));
+        cb_procedureType.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Depósito", "Retiro", "Cambio de Divisas", "Trámite multiple" }));
         cb_procedureType.setMaximumSize(null);
         cb_procedureType.setPreferredSize(new java.awt.Dimension(150, 46));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridy = 1;
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
         p_container.add(cb_procedureType, gridBagConstraints);
+
+        lbl_clientType.setText("Cuántos trámites necesita realizar:");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
+        p_container.add(lbl_clientType, gridBagConstraints);
+
+        cb_clientType.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Preferencial", "Solo un trámite", "Dos o más trámites" }));
+        cb_clientType.setMaximumSize(null);
+        cb_clientType.setPreferredSize(new java.awt.Dimension(150, 46));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
+        p_container.add(cb_clientType, gridBagConstraints);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 3;

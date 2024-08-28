@@ -201,6 +201,7 @@ public class W_Login extends javax.swing.JFrame {
                             break;
 
                     }
+                    appSettings.initCounters();
                     W_Home w_Home = new W_Home(appSettings);
                     this.dispose();
                     

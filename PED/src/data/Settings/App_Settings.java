@@ -11,6 +11,7 @@ import java.io.File;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 
 /**
@@ -23,11 +24,42 @@ public class App_Settings {
     private User currentUser;
     private SQLite_DBManager sql;
     private API_Connection api_Connection;
-    private Queue queue;
+    private Queue[] counters;
     
     public App_Settings(){
         sql = new SQLite_DBManager();
         api_Connection = new  API_Connection();
+    }
+    
+    public void initCounters(){
+        counters = new Queue[getCurrentBank().getbCounters()];
+        for (int i = 0; i < counters.length; i++) {
+            String counterName = "Caja ";
+            if (i == 1) {
+                counterName += i + " | Preferencial";
+            }else if (i == 2) {
+                counterName += i + " | Rápida";
+            }else{
+                counterName += i;
+            }
+            counters[i] = new Queue(counterName);
+        }
+    }
+    
+    public Queue getCounter(int queueIndex) {
+        return counters[queueIndex];
+    }
+    
+    public int getLessBusyCounter() {
+        int lessBussyCounter = 2;
+        // Recorre todas las cajas en busca de la que tenga menos clientes
+        // inicia a partir de la caja 3 ya que las primeras 2 son preferencial y rápida
+        for (int i = 2; i < counters.length - 1; i++) {
+            if (counters[i].getNodesQTY() < counters[i + 1].getNodesQTY()) {
+                lessBussyCounter = i;
+            }
+        }
+        return lessBussyCounter;
     }
 
     
@@ -59,9 +91,7 @@ public class App_Settings {
         return sql;
     }
 
-    public Queue getQueue() {
-        return queue;
-    }
+    
     
     
     

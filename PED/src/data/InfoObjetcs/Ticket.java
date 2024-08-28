@@ -5,16 +5,18 @@ import java.util.Date;
 
 public class Ticket {
 
-    private int ticketID, clientAge, clientID;
-    private String clientName,
+    private int ticketID;
+    private String  clientAge, clientID,clientName,
             procedureType, // Depósitos , Retiros, Cambio de divisas
-            procedureStatus; // P = Atentido  |  NS = No antentido
+            procedureStatus, // P = Atentido  |  NS = No antentido
+            counter; // Caja en la que se atenderá
     private Date creationTime, attentionTime;
     private char clientType; // P = Preferencial | A = Un solo tramite |B = MultiTramite | 
     private App_Settings app_Settings;
 
     // El ticket number se reinicia cada d[ia
-    public Ticket(int ticketID, int clientAge, int clientID, String clientName, String procedureType, String procedureStatus, Date creationTime, Date attentionTime, char clientType, App_Settings app_Settings) {
+    public Ticket(int ticketID, String clientAge, String clientID, String clientName, String procedureType, String procedureStatus, Date creationTime, Date attentionTime, char clientType, String counter, App_Settings app_Settings) {
+        
         this.ticketID = ticketID;
         this.clientAge = clientAge;
         this.clientID = clientID;
@@ -24,7 +26,9 @@ public class Ticket {
         this.creationTime = creationTime;
         this.attentionTime = attentionTime;
         this.clientType = clientType;
+        this.counter = counter;
         this.app_Settings = app_Settings;
+        
         app_Settings.getSql().insert(
                 app_Settings.getCurrentBank().getDbName(),
                 "Tickets",
@@ -37,7 +41,7 @@ public class Ticket {
                     {"tCreationDate", creationTime},
                     {"tAttentionDate", attentionTime},
                     {"tProcedureType", procedureType},
-                    {"cCounterID", null},
+                    {"cCounterID", counter},
                     {"uCashierID", null}
                 }
         );
@@ -51,11 +55,11 @@ public class Ticket {
         this.ticketID = ticketID;
     }
 
-    public int getClientAge() {
+    public String getClientAge() {
         return clientAge;
     }
 
-    public void setClientAge(int clientAge) {
+    public void setClientAge(String clientAge) {
         this.clientAge = clientAge;
     }
 
