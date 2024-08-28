@@ -65,12 +65,12 @@ public class API_Connection {
                         
                         break;
                     case "personalInformationByID":
-                        apiResult = new String[5];
+                        apiResult = new String[4];
                         apiResult[0] = dataObject.getJSONArray("results").getJSONObject(0).getString("firstname1");
                         apiResult[1] = dataObject.getJSONArray("results").getJSONObject(0).getString("firstname2");
                         apiResult[2] = dataObject.getJSONArray("results").getJSONObject(0).getString("lastname1");
                         apiResult[3] = dataObject.getJSONArray("results").getJSONObject(0).getString("lastname2");
-                        apiResult[4] = dataObject.getJSONArray("results").getJSONObject(0).getString("admin");
+                        //apiResult[4] = dataObject.getJSONArray("results").getJSONObject(0).getString("admin");
                         break;
                     default:
                         throw new AssertionError();

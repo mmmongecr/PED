@@ -4,8 +4,11 @@
  */
 package gui;
 
+import data.InfoObjetcs.User;
 import data.Settings.App_Settings;
 import java.awt.GridBagConstraints;
+import java.util.List;
+import javax.swing.JOptionPane;
 
 /**
  * @author manuel.mora
@@ -22,23 +25,16 @@ public class W_Login extends javax.swing.JFrame {
     public W_Login(App_Settings appSettings) {
         
         this.appSettings = appSettings;
-        setLocationRelativeTo(null);
         initComponents();
         
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                //new W_Login(appSettings).setVisible(true);
-            }
-        });
-        
-        
+        lbl_Title.setText(lbl_Title.getText().replace("###", appSettings.getCurrentBank().getbName()));
         pnl_StatusBar.showPanel(appSettings);
         pnl_Login.showPanel("bg2.png");
         
         repaint();
         revalidate();
         setVisible(true);
+        setLocationRelativeTo(null);
         
         
     }
@@ -86,7 +82,7 @@ public class W_Login extends javax.swing.JFrame {
         lbl_Title.setFont(new java.awt.Font("Candara", 1, 24)); // NOI18N
         lbl_Title.setForeground(new java.awt.Color(0, 204, 204));
         lbl_Title.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbl_Title.setText("<html>   <div style=\"text-align: center; \">     <p style=\"text-shadow: 2px 2px 4px #aaa;\">Bienvenido al banco ###</p>     <p style=\"text-shadow: 2px 2px 4px #aaa;\">Por favor inicie sesión</p>     <p style=\"text-shadow: 2px 2px 4px #aaa;\">Línea 3</p>   </div> </html><br>");
+        lbl_Title.setText("<html>   <div style=\"text-align: center; \">     <p style=\"text-shadow: 2px 2px 4px #aaa;\">Bienvenido al banco ###</p>     <p style=\"text-shadow: 2px 2px 4px #aaa;\">Por favor inicie sesión</p>   </div> </html><br>");
         lbl_Title.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         lbl_Username.setText("Nombre de usuario :");
@@ -138,7 +134,7 @@ public class W_Login extends javax.swing.JFrame {
                 .addComponent(tf_Password, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(56, 56, 56)
                 .addComponent(btn_login, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(94, Short.MAX_VALUE))
+                .addContainerGap(124, Short.MAX_VALUE))
         );
 
         pnl_Login.add(p_container, java.awt.BorderLayout.EAST);
@@ -149,7 +145,72 @@ public class W_Login extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_loginActionPerformed
-        
+        if (tf_Username.getText() == ""  || tf_Password.getPWSD() == "") {
+            JOptionPane.showMessageDialog(this, "Por favor ingrese el uisuario y la contraseña para poder continuar", "Error!!!", JOptionPane.WARNING_MESSAGE);
+        }else {
+
+            if ( // Valida que los inputs sean correctos y no contengan SQL Injection
+                    appSettings.getSql().noSQLInjection(tf_Username.getText())
+                    && appSettings.getSql().noSQLInjection(tf_Password.getPWSD())) {
+                // Si cumple los criterios consulta la base de datos en busca del usuario y la contraseña
+                
+                // String dbName, String tableName, String[] selectColumns, String[][] whereClauses, String[] groupByColumns, String[] orderByColumns
+                List<Object> validation =  appSettings.getSql().select(
+                        appSettings.getCurrentBank().getDbName(), 
+                        "Users", 
+                        //new String[]{"uType"}, 
+                        null, // Select *
+                        new String[][]{
+                            {"uUsername","=",tf_Username.getText()},
+                            {"uPassword","=", tf_Password.getPWSD()}
+                        },
+                        null, null);
+                
+                System.out.println("Resultados : " + validation.size() );
+                
+                if (validation.size() > 1) { // Valida si el usuario y la contraseña se encuentran en la base de datos 
+
+                    Object[] row = (Object[]) validation.getLast();
+
+                    for (int i = 0; i < row.length; i++) {
+                        System.out.println(" Valor - " + row[i]);
+                    }
+                    String userType = (String) row[5];
+                    appSettings.setCurrentUser(
+                            //int ID, String username, String name, String last_name, String user_type, String status, Date date
+                            new User(
+                                    Integer.parseInt(row[0].toString()),
+                                    row[1].toString(),
+                                    row[3].toString(),
+                                    row[4].toString(),
+                                    row[5].toString(),
+                                    row[6].toString(),
+                                    null
+                            )
+                    );
+
+                    switch (userType) {
+                        case "Admin":
+                            // Agregar pantalla para admin
+                            break;
+                        case "Dispenser":
+                            // Agregar pantalla para admin
+                            break;
+                        case "Cashier":
+                            // Agregar pantalla para admin
+                            break;
+
+                    }
+                    W_Home w_Home = new W_Home(appSettings);
+                    this.dispose();
+                    
+                } else {
+                    JOptionPane.showMessageDialog(this, "Sus credenciales no son correctos\nPor favor intente de nuevo", "No puede iniciar sesión", JOptionPane.WARNING_MESSAGE);
+                }
+
+            }
+
+        }
     }//GEN-LAST:event_btn_loginActionPerformed
 
     

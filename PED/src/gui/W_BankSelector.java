@@ -26,7 +26,6 @@ public class W_BankSelector extends javax.swing.JFrame {
     public W_BankSelector(App_Settings appSettings) {
         
         this.appSettings = appSettings;
-        setLocationRelativeTo(null);
         
         initComponents();
         
@@ -34,16 +33,7 @@ public class W_BankSelector extends javax.swing.JFrame {
         pnl_Main.showPanel("bg2.png");
         
         checkBankSites();
-        
-        
-        /* Create and display the form */
-        /*java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                //new W_Login(appSettings).setVisible(true);
-            }
-        });*/
-        
-        
+        setLocationRelativeTo(null);
         
         repaint();
         revalidate();
@@ -70,7 +60,7 @@ public class W_BankSelector extends javax.swing.JFrame {
     }
     
     public void changeCard(int cardID, String [] sites){
-        p_container.remove(0);
+        p_container.removeAll();
         switch (cardID) {
             case 1:
                 card_NewBank = new Card_BS_NewBank();
@@ -106,14 +96,15 @@ public class W_BankSelector extends javax.swing.JFrame {
         pnl_StatusBar = new presets.CM_StatusBar();
         pnl_Main = new presets.CM_Panel();
         p_container12 = new javax.swing.JScrollPane();
-        pnl_cards = new javax.swing.JPanel();
         p_container = new javax.swing.JPanel();
         lbl_Title = new javax.swing.JLabel();
+        pnl_cards = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Sistema de registro");
         setMaximumSize(null);
         setName("Login"); // NOI18N
+        setResizable(false);
         setSize(new java.awt.Dimension(0, 0));
         setType(java.awt.Window.Type.UTILITY);
 
@@ -129,12 +120,6 @@ public class W_BankSelector extends javax.swing.JFrame {
         p_container12.setMaximumSize(null);
         p_container12.setMinimumSize(null);
         p_container12.setPreferredSize(new java.awt.Dimension(485, 595));
-
-        pnl_cards.setOpaque(false);
-        pnl_cards.setPreferredSize(new java.awt.Dimension(485, 595));
-        pnl_cards.setLayout(new java.awt.BorderLayout());
-        p_container12.setViewportView(pnl_cards);
-
         pnl_Main.add(p_container12, java.awt.BorderLayout.EAST);
 
         p_container.setPreferredSize(new java.awt.Dimension(485, 605));
@@ -147,6 +132,11 @@ public class W_BankSelector extends javax.swing.JFrame {
         lbl_Title.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         lbl_Title.setPreferredSize(new java.awt.Dimension(500, 50));
         p_container.add(lbl_Title, java.awt.BorderLayout.NORTH);
+
+        pnl_cards.setOpaque(false);
+        pnl_cards.setPreferredSize(new java.awt.Dimension(485, 595));
+        pnl_cards.setLayout(new java.awt.BorderLayout());
+        p_container.add(pnl_cards, java.awt.BorderLayout.CENTER);
 
         pnl_Main.add(p_container, java.awt.BorderLayout.EAST);
 

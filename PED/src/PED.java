@@ -1,14 +1,6 @@
 
-import data.InfoObjetcs.Ticket;
-import data.QueueManagement.Queue;
-import data.Settings.API_Connection;
 import data.Settings.App_Settings;
-import data.Settings.SQLite_DBManager;
 import gui.W_BankSelector;
-import gui.W_Dispenser;
-import gui.W_Login;
-import java.util.Calendar;
-import java.util.Date;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -27,12 +19,12 @@ public class PED {
     public static void main(String[] args) {
         
         
-        SQLite_DBManager sql = new SQLite_DBManager();
-        //sql.dinamycQuery("555555555555555555.ped", "ped_Users", new String[]{"*"}, null, null, null);
-        Object [] rows = (Object[]) sql.dinamycQuery("555555555555555555.ped", "ped_Users", new String[]{"*"}, null, null, null).get(1);
-        System.out.println("CANTIDAD de columnas : " + rows.length);
-        System.out.println("Cantidad de Resultados : " + sql.dinamycQuery("555555555555555555.ped", "ped_Users", new String[]{"*"}, null, null, null).size());
-        
+//        SQLite_DBManager sql = new SQLite_DBManager();
+//        //sql.select("555555555555555555.ped", "ped_Users", new String[]{"*"}, null, null, null);
+//        Object [] rows = (Object[]) sql.select("LAFISE.ped", "Users", new String[]{"*"}, null, null, null).get(1);
+//        System.out.println("CANTIDAD de columnas : " + rows.length);
+//        System.out.println("Cantidad de Resultados : " + sql.select("LAFISE.ped", "Users", new String[]{"*"}, null, null, null).size());
+//        
 //        Queue q1 = new Queue();
 //        q1.joinQueue(new Ticket(5, 52, "Charlie White", "Consulta", "Completado", new Date(2024, Calendar.AUGUST, 17, 8, 20), new Date(2024, Calendar.AUGUST, 17, 8, 45), 'A'));
 //        q1.joinQueue(new Ticket(3, 45, "Alice Johnson", "Consulta", "En Proceso", new Date(2024, Calendar.AUGUST, 19, 14, 0), new Date(2024, Calendar.AUGUST, 21, 12, 30), 'A'));
@@ -71,14 +63,16 @@ public class PED {
 
         
         
-//        App_Settings sysSettings = new App_Settings();
-//        
-//        
-//        W_BankSelector w_BankSelector = new W_BankSelector(sysSettings);
+        App_Settings sysSettings = new App_Settings();
+        W_BankSelector w_BankSelector = new W_BankSelector(sysSettings);
+        
+        
+        
+        
         //W_Login w_Login = new W_Login(sysSettings);
         
-    /*
-        API_Connection api_Connection = new  API_Connection();
+    
+        /*API_Connection api_Connection = new  API_Connection();
         
         String[] printable = null;
         
@@ -93,8 +87,8 @@ public class PED {
         System.out.println("personalInformationByID");
         for (int i = 0; i < printable.length; i++) {
             System.out.println("\t" + printable[i]);
-        }
-      */
+        }*/
+      
             
     }
     

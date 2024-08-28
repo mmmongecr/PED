@@ -5,6 +5,8 @@
 package presets;
 
 import data.Settings.App_Settings;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JPanel;
@@ -33,14 +35,23 @@ public class CM_StatusBar extends javax.swing.JPanel {
             lb_User.setText("          ");
             lb_UserType.setText("          ");
         }
-        //appSettings.setDollarExchangeRate();
-        //lb_DollarExchangeRate.setText("T. Cambio \t \t Venta: " + appSettings.getDollarExchangeRate()[0] + " /  Compra: " + appSettings.getDollarExchangeRate()[1]);
+        
+        if (appSettings.getCurrentBank() != null) {
+            lb_DollarExchangeRate.setText("T. Cambio \t \t Venta: " + appSettings.getCurrentBank().getbDollarSellPrice() + " /  Compra: " + appSettings.getCurrentBank().getbDollarBuyPrice());
+        }
+        
+        
+        
+        //appSettings.getSql().sele
+        
+        /// Trae la hora actual del sistema en un formato especifico 
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss a");
         
         Thread dateTimeThread = new Thread(new Runnable() {
             @Override
             public void run() {
                 while (true) {
-                    lb_Datetime.setText(appSettings.Now());
+                    lb_Datetime.setText(dateFormat.format(new Date().getTime()));
                     selfPanel.revalidate();
                     //selfPanel.repaint();
                     

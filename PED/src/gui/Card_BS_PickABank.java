@@ -158,12 +158,15 @@ public class Card_BS_PickABank extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_initSystemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_initSystemActionPerformed
+        parentFrame.getAppSettings().setCurrentBank(cb_BankNames.getSelectedItem().toString());
         W_Login login = new W_Login(parentFrame.getAppSettings());
         parentFrame.dispose();
     }//GEN-LAST:event_btn_initSystemActionPerformed
 
     private void btn_newBankActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_newBankActionPerformed
         parentFrame.changeCard(1, null);
+        parentFrame.revalidate();
+        parentFrame.repaint();
     }//GEN-LAST:event_btn_newBankActionPerformed
 
 

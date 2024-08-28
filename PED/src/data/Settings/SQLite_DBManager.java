@@ -13,6 +13,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 
 /**
@@ -21,11 +22,6 @@ import java.util.List;
 public class SQLite_DBManager {
     
     private Connection conn;
-    
-    public void setNewBank(){
-        
-    }
-    
     
     // Método para conectar a la base de datos
     protected void connectDB(String dbName) {
@@ -40,7 +36,7 @@ public class SQLite_DBManager {
 
             if (!dbExists) {
                 System.out.println("Base de datos no encontrada. Creando una nueva base de datos.");
-                
+                /*
                 // Define las columnas de la tabla Users
                 String[][] userColumns = {
                     {"user_ID", "INTEGER", "PRIMARY KEY", "AUTOINCREMENT"},
@@ -79,7 +75,7 @@ public class SQLite_DBManager {
                 tempUser[3][1] = "TicketDispenser";         // "user_type"
                 tempUser[4][1] = "Active";          // "status"
                 insertRow(dbName,"ped_Users", tempUser);
-   
+                */
                 
             } else {
                 System.out.println("Conexión establecida a la base de datos existente.");
@@ -113,6 +109,9 @@ public class SQLite_DBManager {
             ) {
             return true;
         }else {
+            JOptionPane.showMessageDialog(null,
+                    "La información introducida contiene código potencialmente peligroso\n"
+                            + "Por favor verifique e ingresar la información de forma correcta", "Peligro de injección SQL", JOptionPane.ERROR_MESSAGE);
             return false;
         }
     }
@@ -139,28 +138,6 @@ public class SQLite_DBManager {
     }
         closeDB();
 }
-
-    // Método para agregar una línea a la tabla
-    public synchronized void insertRow(String dbName, String tableName, String[][] values) {
-        connectDB(tableName);
-        try (Statement stmt = conn.createStatement()) {
-            StringBuilder columns = new StringBuilder();
-            StringBuilder vals = new StringBuilder();
-            for (String[] value : values) {
-                columns.append(value[0]).append(", ");
-                vals.append("'").append(value[1]).append("', ");
-            }
-            // Eliminar las comas y espacios adicionales
-            columns.setLength(columns.length() - 2);
-            vals.setLength(vals.length() - 2);
-            String sql = "INSERT INTO " + tableName + " (" + columns + ") VALUES (" + vals + ")";
-            stmt.executeUpdate(sql);
-            System.out.println("Línea insertada.");
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-        closeDB();
-    }
 
     // Método para borrar una línea de la tabla por ID
     public synchronized void deleteRowById(String dbName, String tableName, String id) {
@@ -234,13 +211,14 @@ public class SQLite_DBManager {
         
         // Convierte el nombre del Banco a formato sin espacios para nombrar la DB
         String dbName = bankInfo[0].replace(" ", "_") + ".ped";
-        String[][] queryData = null;
+        String[][] columnsData = null;
+        Object[][] queryValues = null;
         
         File dbFile = new File(dbName);
         connectDB(dbName);
 
         // Crea la tabla BankInfo
-        queryData = new String[][]{
+        columnsData = new String[][]{
             {"bName", "TEXT"},
             {"bCounters", "INTEGER"},
             {"bDispensers", "INTEGER"},
@@ -248,19 +226,45 @@ public class SQLite_DBManager {
             {"bDollarBuyPrice", "REAL"},
             {"bDollarLastUpdate", "INTEGER"}
         };
-        createTable(dbName, "BankInfo", queryData);
+        createTable(dbName, "BankInfo", columnsData);
+        
+        // Inserta la información del banco
+        queryValues = new Object[][]{
+            {columnsData[0][0], bankInfo[0]},
+            {columnsData[1][0], Integer.parseInt(bankInfo[1])},
+            {columnsData[2][0], Integer.parseInt(bankInfo[2])},
+            {columnsData[3][0], null},
+            {columnsData[4][0], null},
+            {columnsData[5][0], null}
+        };
+        insert(dbName, "BankInfo", queryValues);
+        
 
         // Crea la tabla Counters
-        queryData = new String[][]{
+        columnsData = new String[][]{
             {"cID", "INTEGER", "PRIMARY KEY", "AUTOINCREMENT"},
             {"cName", "TEXT"},
             {"cStatus", "TEXT"},
-            {"uCashierID", "INTEGER"}
+            {"uCashierID", "INTEGER"},
+            {"tCurrentTicketID", "INTEGER"}
         };
-        createTable(dbName, "Counters", queryData);
+        createTable(dbName, "Counters", columnsData);
+        
+        // Genera la cantidad de cajas establecidos en BankInfo
+        for (int i = 1; i <= Integer.parseInt(bankInfo[1]); i++) {
+            queryValues = new Object[][]{
+                {"cID", null},
+                {"cName", "Caja " + i},
+                {"cStatus", "Inactive"},
+                {"uCashierID", null},
+                {"tCurrentTicketID", null}
+            };
+            insert(dbName, "Counters", queryValues);
+        }
+        
 
         // Crea la tabla Users
-        queryData = new String[][]{
+        columnsData = new String[][]{
             {"uID", "INTEGER", "PRIMARY KEY", "AUTOINCREMENT"},
             {"uUsername", "TEXT"},
             {"uPassword", "TEXT"},
@@ -270,10 +274,43 @@ public class SQLite_DBManager {
             {"uStatus", "TEXT"},
             {"uLastLogin", "INTEGER"}
         };
-        createTable(dbName, "Users", queryData);
+        createTable(dbName, "Users", columnsData);
+        
+        // Crea el usuario administrador
+        queryValues = new Object[][]{
+            {"uID", null},
+            {"uUsername", adminUser[0]},
+            {"uPassword", adminUser[1]},
+            {"uName", adminUser[2]},
+            {"uLastName", adminUser[3]},
+            {"uType", "Admin"},
+            {"uStatus", "Active"},
+            {"uLastLogin", null}
+        };
+        insert(dbName, "Users", queryValues);
+        
+        // Crea los usuarios para los dispensadores basado en la cantidad seleccionada
+        for (int i = 1; i <= Integer.parseInt(bankInfo[2]) ; i++) {
+            queryValues = new Object[][]{
+                {"uID", null},
+                {"uUsername", "dispenser" + i},
+                {"uPassword", "dispenser" + i},
+                {"uName", "Dispenser"},
+                {"uLastName", "" + i},
+                {"uType", "Dispenser"},
+                {"uStatus", "Active"},
+                {"uLastLogin", null}
+            };
+            insert(dbName, "Users", queryValues);
+        }
+        
+        
+        
+
+        
 
         // Crea la tabla Tickets
-        queryData = new String[][]{
+        columnsData = new String[][]{
             {"tID", "INTEGER", "PRIMARY KEY", "AUTOINCREMENT"},
             {"tClientName", "TEXT"},
             {"tClientID", "INTEGER"},
@@ -282,50 +319,11 @@ public class SQLite_DBManager {
             {"tCreationDate", "INTEGER"},
             {"tAttentionDate", "INTEGER"},
             {"tProcedureType", "TEXT"},
+            {"tProcedureStatus", "TEXT"},
             {"cCounterID", "INTEGER"},
             {"uCashierID", "INTEGER"},};
-        createTable(dbName, "Tickets", queryData);
+        createTable(dbName, "Tickets", columnsData);
 
-        // Inserta la información del banco
-        queryData = new String[][]{
-            {"bName", bankInfo[0]},
-            {"bCounters", bankInfo[1]},
-            {"bDollarSellPrice", "0"},
-            {"bDollarBuyPrice", "0"}
-        };
-        insertRow(dbName, "BankInfo", queryData);
-
-        // Inserta la información del usuario Admin
-        queryData = new String[][]{
-            {"uUsername", adminUser[0]},
-            {"uPassword", adminUser[1]},
-            {"uName", adminUser[2]},
-            {"uLastName", adminUser[3]},
-            {"uType", "Admin"},
-            {"uStatus", "Active"}
-        };
-        insertRow(dbName, "Users", queryData);
-
-        // Genera la cantidad de cajas establecidos en BankInfo
-        for (int i = 1; i <= Integer.parseInt(bankInfo[1]); i++) {
-            queryData = new String[][]{
-                {"cName", "Caja " + i},
-                {"cStatus", "Inactive"},};
-            insertRow(dbName, "Users", queryData);
-        }
-        
-        // Crea los usuarios para los dispensadores basado en la cantidad seleccionada
-        for (int i = 1; i <= Integer.parseInt(bankInfo[2]) ; i++) {
-            queryData = new String[][]{
-                {"uUsername", "dispenser" + i},
-                {"uPassword", "dispenser" + i},
-                {"uName", "Dispenser"},
-                {"uLastName", "" + i},
-                {"uType", "Dispenser"},
-                {"uStatus", "Active"}
-            };
-            insertRow(dbName, "Users", queryData);
-        }
         
 
         //////////////////////// IDEA
@@ -333,95 +331,16 @@ public class SQLite_DBManager {
         // Genera la cantidad de usuarios dispensadores establecidos en BankInfo
         
     }
-    //Metodo dinamico para el SELECT
-    public synchronized ResultSet dynamicSelect(String dbName, String tableName, String[] columns, String condition) {
-        connectDB(dbName);
-        ResultSet rs = null;
-        try (Statement stmt = conn.createStatement()) {
-            StringBuilder sql = new StringBuilder("SELECT ");
-            if (columns == null || columns.length == 0) {
-                sql.append("*");
-            } else {
-                for (int i = 0; i < columns.length; i++) {
-                    sql.append(columns[i]);
-                    if (i < columns.length - 1) {
-                        sql.append(", ");
-                    }
-                }
-            }
-            sql.append(" FROM ").append(tableName);
-            if (condition != null && !condition.isEmpty()) {
-                sql.append(" WHERE ").append(condition);
-            }
-            
-            rs = stmt.executeQuery(sql.toString());
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-        return rs;
-    }
+    
 
-
-    //Metodo dinamico para el UPDATE
-    public synchronized void dynamicUpdate(String dbName, String tableName, String[][] updates, String condition) {
-        connectDB(dbName);
-        try (Statement stmt = conn.createStatement()) {
-            StringBuilder sql = new StringBuilder("UPDATE ").append(tableName).append(" SET ");
-            for (int i = 0; i < updates.length; i++) {
-                sql.append(updates[i][0]).append(" = '").append(updates[i][1]).append("'");
-                if (i < updates.length - 1) {
-                    sql.append(", ");
-                }
-            }
-            if (condition != null && !condition.isEmpty()) {
-                sql.append(" WHERE ").append(condition);
-            }
-            
-            stmt.executeUpdate(sql.toString());
-            System.out.println("Datos actualizados.");
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-        closeDB();
-    }
-
-    // Metodo dinamico con AGRUPACION
-    public synchronized ResultSet dynamicSelectWithGroupBy(String dbName, String tableName, String[] columns, String condition, String groupBy) {
-        connectDB(dbName);
-        ResultSet rs = null;
-        try (Statement stmt = conn.createStatement()) {
-            StringBuilder sql = new StringBuilder("SELECT ");
-            if (columns == null || columns.length == 0) {
-                sql.append("*");
-            } else {
-                for (int i = 0; i < columns.length; i++) {
-                    sql.append(columns[i]);
-                    if (i < columns.length - 1) {
-                        sql.append(", ");
-                    }
-                }
-            }
-            sql.append(" FROM ").append(tableName);
-            if (condition != null && !condition.isEmpty()) {
-                sql.append(" WHERE ").append(condition);
-            }
-            if (groupBy != null && !groupBy.isEmpty()) {
-                sql.append(" GROUP BY ").append(groupBy);
-            }
-            
-            rs = stmt.executeQuery(sql.toString());
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-        return rs;
-    }
-
-    public synchronized List<Object> dinamycQuery(String dbName, String tableName, String[] selectColumns, String[][] whereClauses, String[] groupByColumns, String[] orderByColumns) {
+    
+    
+    public synchronized List<Object> select(String dbName, String tableName, String[] selectColumns, String[][] whereClauses, String[] groupByColumns, String[] orderByColumns) {
         connectDB(dbName);
 
+        // Construcción de la consulta SELECT
         String query = "SELECT ";
 
-        // Construye la parte de SELECT
         if (selectColumns != null && selectColumns.length > 0) {
             for (int i = 0; i < selectColumns.length; i++) {
                 query += selectColumns[i];
@@ -430,23 +349,23 @@ public class SQLite_DBManager {
                 }
             }
         } else {
-            query += "*"; // Si no hay columnas especificadas, selecciona todas
+            query += "* "; // Selecciona todas las columnas si no se especifican
         }
 
         query += " FROM " + tableName;
 
-        // Construir la parte del WHERE
+        // Construcción de la cláusula WHERE
         if (whereClauses != null && whereClauses.length > 0) {
             query += " WHERE ";
             for (int i = 0; i < whereClauses.length; i++) {
-                query += whereClauses[i][0] + " " + whereClauses[i][1] + " " + whereClauses[i][2];
+                query += whereClauses[i][0] + " " + whereClauses[i][1] + " '" + whereClauses[i][2] + "'";
                 if (i < whereClauses.length - 1) {
                     query += " AND ";
                 }
             }
         }
 
-        // Construir la parte de GROUP BY
+        // Construcción de la cláusula GROUP BY
         if (groupByColumns != null && groupByColumns.length > 0) {
             query += " GROUP BY ";
             for (int i = 0; i < groupByColumns.length; i++) {
@@ -457,7 +376,7 @@ public class SQLite_DBManager {
             }
         }
 
-        // Construir la parte de ORDER BY
+        // Construcción de la cláusula ORDER BY
         if (orderByColumns != null && orderByColumns.length > 0) {
             query += " ORDER BY ";
             for (int i = 0; i < orderByColumns.length; i++) {
@@ -468,21 +387,23 @@ public class SQLite_DBManager {
             }
         }
 
-        /// Resultados del query
+        // Lista para almacenar los resultados
         List<Object> results = new ArrayList<>();
 
         try (Statement stmt = conn.createStatement()) {
 
             ResultSet rs = stmt.executeQuery(query);
 
-            // Obtener nombres de columnas
+            // Obtener metadatos de las columnas
             int columnCount = rs.getMetaData().getColumnCount();
+            System.out.println("cantidad de columnas para " + tableName + " es : " + columnCount);
+
             String[][] columsMetaData = new String[columnCount][2];
             for (int i = 1; i <= columnCount; i++) {
                 columsMetaData[i - 1][0] = rs.getMetaData().getColumnName(i);
                 columsMetaData[i - 1][1] = rs.getMetaData().getColumnTypeName(i);
-                //System.out.println("CHAPI \n" + columsMetaData[i - 1][0] + "     " +  columsMetaData[i - 1][1]);
-                System.out.println("CHAPI \n" + rs.getMetaData().getColumnName(i) + "     " + rs.getMetaData().getColumnTypeName(i) + " .......");
+                System.out.println("OUTPUT ----------------------------------- \n"
+                        + rs.getMetaData().getColumnName(i) + "     " + rs.getMetaData().getColumnTypeName(i) + " .......");
             }
             results.add(columsMetaData);
 
@@ -492,26 +413,29 @@ public class SQLite_DBManager {
                 for (int i = 1; i <= columnCount; i++) {
                     System.out.println("Column name: " + columsMetaData[i - 1][0] + " \t\tColumn Type: " + columsMetaData[i - 1][1]);
                     try {
-                        // Trae los datos de acuerdo al tipo definido en SQL
+                        // Traer los datos de acuerdo al tipo definido en SQL
                         switch (columsMetaData[i - 1][1]) {
                             case "TEXT":
-                                row[i] = rs.getString(columsMetaData[i - 1][0]);
+                                row[i - 1] = rs.getString(columsMetaData[i - 1][0]);
                                 break;
                             case "INTEGER":
-                                row[i] = rs.getInt(columsMetaData[i - 1][0]);
+                                row[i - 1] = rs.getInt(columsMetaData[i - 1][0]);
                                 break;
                             case "REAL":
                             case "DECIMAL":
-                                row[i] = rs.getDouble(columsMetaData[i - 1][0]);
+                                row[i - 1] = rs.getDouble(columsMetaData[i - 1][0]);
                                 break;
                             case "DATE":
-                                row[i] = rs.getDate(columsMetaData[i - 1][0]);
+                                row[i - 1] = rs.getDate(columsMetaData[i - 1][0]);
                                 break;
                             default:
-                                row[i] = rs.getObject(columsMetaData[i - 1][0]);
+                                row[i - 1] = rs.getObject(columsMetaData[i - 1][0]);
                                 break;
                         }
+
+                        System.out.println("data.Settings.SQLite_DBManager.select()       " + row[i - 1]);
                     } catch (ArrayIndexOutOfBoundsException e) {
+                        e.printStackTrace();
                     }
                 }
                 results.add(row);
@@ -526,58 +450,179 @@ public class SQLite_DBManager {
 
         return results;
     }
+
+//    public synchronized List<Object> select(String dbName, String tableName, String[] selectColumns, String[][] whereClauses, String[] groupByColumns, String[] orderByColumns) {
+//        connectDB(dbName);
+//
+//        String query = "SELECT ";
+//
+//        // Construye la parte de SELECT
+//        if (selectColumns != null && selectColumns.length > 0) {
+//            for (int i = 0; i < selectColumns.length; i++) {
+//                query += selectColumns[i];
+//                if (i < selectColumns.length - 1) {
+//                    query += ", ";
+//                }
+//            }
+//        } else {
+//            query += "* "; // Si no hay columnas especificadas, selecciona todas
+//        }
+//
+//        query += " FROM " + tableName;
+//
+//        // Construir la parte del WHERE
+//        if (whereClauses != null && whereClauses.length > 0) {
+//            query += " WHERE ";
+//            for (int i = 0; i < whereClauses.length; i++) {
+//                query += whereClauses[i][0] + " " + whereClauses[i][1] + " '" + whereClauses[i][2] + "'";
+//                if (i < whereClauses.length - 1) {
+//                    query += " AND ";
+//                }
+//            }
+//        }
+//
+//        // Construir la parte de GROUP BY
+//        if (groupByColumns != null && groupByColumns.length > 0) {
+//            query += " GROUP BY ";
+//            for (int i = 0; i < groupByColumns.length; i++) {
+//                query += groupByColumns[i];
+//                if (i < groupByColumns.length - 1) {
+//                    query += ", ";
+//                }
+//            }
+//        }
+//
+//        // Construir la parte de ORDER BY
+//        if (orderByColumns != null && orderByColumns.length > 0) {
+//            query += " ORDER BY ";
+//            for (int i = 0; i < orderByColumns.length; i++) {
+//                query += orderByColumns[i];
+//                if (i < orderByColumns.length - 1) {
+//                    query += ", ";
+//                }
+//            }
+//        }
+//
+//        /// Resultados del query
+//        List<Object> results = new ArrayList<>();
+//
+//        try (Statement stmt = conn.createStatement()) {
+//
+//            ResultSet rs = stmt.executeQuery(query);
+//
+//            // Obtener nombres de columnas
+//            int columnCount = rs.getMetaData().getColumnCount();
+//            System.out.println("cantidad de columnas para " + tableName + " es : " + columnCount);
+//            
+//            String[][] columsMetaData = new String[columnCount][2];
+//            for (int i = 1; i <= columnCount; i++) {
+//                columsMetaData[i - 1][0] = rs.getMetaData().getColumnName(i);
+//                columsMetaData[i - 1][1] = rs.getMetaData().getColumnTypeName(i);
+//                //System.out.println("OUTPUT ----------------------------------- \n" + columsMetaData[i - 1][0] + "     " +  columsMetaData[i - 1][1]);
+//                System.out.println("OUTPUT ----------------------------------- \n" 
+//                        + rs.getMetaData().getColumnName(i-1) + "     " + rs.getMetaData().getColumnTypeName(i-1) + " .......");
+//            }
+//            results.add(columsMetaData);
+//
+//            // Obtener los datos
+//            while (rs.next()) {
+//                Object[] row = new Object[columnCount];
+//                for (int i = 1; i <= columnCount; i++) {
+//                    System.out.println("Column name: " + columsMetaData[i - 1][0] + " \t\tColumn Type: " + columsMetaData[i - 1][1]);
+//                    try {
+//                        // Trae los datos de acuerdo al tipo definido en SQL
+//                        
+//                        
+//                        switch (columsMetaData[i - 1][1]) {
+//                            case "TEXT":
+//                                row[i] = rs.getString(columsMetaData[i - 1][0]);
+//                                break;
+//                            case "INTEGER":
+//                                row[i] = rs.getInt(columsMetaData[i - 1][0]);
+//                                break;
+//                            case "REAL":
+//                            case "DECIMAL":
+//                                row[i] = rs.getDouble(columsMetaData[i - 1][0]);
+//                                break;
+//                            case "DATE":
+//                                row[i] = rs.getDate(columsMetaData[i - 1][0]);
+//                                break;
+//                            default:
+//                                row[i] = rs.getObject(columsMetaData[i - 1][0]);
+//                                break;
+//                        }
+//                        
+//                        System.out.println("data.Settings.SQLite_DBManager.select()       " + row[i]);
+//                    } catch (ArrayIndexOutOfBoundsException e) {
+//                    }
+//                }
+//                results.add(row);
+//            }
+//
+//            rs.close();
+//        } catch (SQLException e) {
+//            System.out.println(e.getMessage());
+//        } finally {
+//            closeDB();
+//        }
+//
+//        return results; // Cada record de la lista va a ser un arreglo con los datos, y todos inician en la posición 1, se omite la cero
+//    }
     
     
     
-    public synchronized void insertData(String dbName, String tableName, String[] columns, Object[] values) {
-        // Conectar a la base de datos especificada
-        connectDB(dbName);
+    public synchronized void insert(String dbName, String tableName, Object[][] entries) {
+    // Conectar a la base de datos especificada
+    connectDB(dbName);
 
-        // Construye el INSERT con el nombre de la tabla y las columnas
-        String query = "INSERT INTO " + tableName + " (";
-        
-        for (int i = 0; i < columns.length; i++) {
-            query += columns[i];
-            if (i < columns.length - 1) {
-                query += ", ";
-            }
-        }
-
-        query += ") VALUES (";
-
-        // Agrega los placeholders para los valores en el query
-        for (int i = 0; i < values.length; i++) {
-            query += "?";
-            if (i < values.length - 1) {
-                query += ", ";
-            }
-        }
-        query += ")";
-
-        
-        // Añade los valores al query
-        try (PreparedStatement pstmt = conn.prepareStatement(query)) {
-            // Asignar los valores al PreparedStatement según su tipo
-            for (int i = 0; i < values.length; i++) {
-                if (values[i] instanceof String) {
-                    pstmt.setString(i + 1, (String) values[i]);
-                } else if (values[i] instanceof Integer) {
-                    pstmt.setInt(i + 1, (Integer) values[i]);
-                } else if (values[i] instanceof Double) {
-                    pstmt.setDouble(i + 1, (Double) values[i]);
-                } else if (values[i] instanceof java.sql.Date) {
-                    pstmt.setDate(i + 1, (java.sql.Date) values[i]);
-                }
-            }
-            
-            // Ejecuta el insert
-            pstmt.executeUpdate();
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        } finally {
-            closeDB();
+    // Construye el INSERT con el nombre de la tabla y las columnas
+    StringBuilder query = new StringBuilder("INSERT INTO " + tableName + " (");
+    
+    // Añade los nombres de las columnas al query
+    for (int i = 0; i < entries.length; i++) {
+        query.append(entries[i][0]);
+        if (i < entries.length - 1) {
+            query.append(", ");
         }
     }
+
+    query.append(") VALUES (");
+
+    // Agrega los placeholders para los valores en el query
+    for (int i = 0; i < entries.length; i++) {
+        query.append("?");
+        if (i < entries.length - 1) {
+            query.append(", ");
+        }
+    }
+    query.append(")");
+
+    // Añade los valores al query
+    try (PreparedStatement pstmt = conn.prepareStatement(query.toString())) {
+        // Asignar los valores al PreparedStatement según su tipo
+        for (int i = 0; i < entries.length; i++) {
+            Object value = entries[i][1];
+            if (value instanceof String) {
+                pstmt.setString(i + 1, (String) value);
+            } else if (value instanceof Integer) {
+                pstmt.setInt(i + 1, (Integer) value);
+            } else if (value instanceof Double) {
+                pstmt.setDouble(i + 1, (Double) value);
+            } else if (value instanceof java.sql.Date) {
+                pstmt.setDate(i + 1, (java.sql.Date) value);
+            } else {
+                pstmt.setObject(i + 1, value); // Por defecto, asignar el valor como Object
+            }
+        }
+
+        // Ejecuta el insert
+        pstmt.executeUpdate();
+    } catch (SQLException e) {
+        System.out.println(e.getMessage());
+    } finally {
+        closeDB();
+    }
+}
 
     
     
@@ -587,7 +632,7 @@ public class SQLite_DBManager {
 
         String query = "UPDATE " + tableName + " SET ";
 
-        // Construir la parte del SET
+        // Construye la parte del SET
         for (int i = 0; i < columns.length; i++) {
             query += columns[i] + " = ?";
             if (i < columns.length - 1) {
@@ -595,7 +640,7 @@ public class SQLite_DBManager {
             }
         }
 
-        // Construir la parte del WHERE
+        // Construye la parte del WHERE
         if (whereClauses != null && whereClauses.length > 0) {
             query += " WHERE ";
             for (int i = 0; i < whereClauses.length; i++) {
@@ -608,12 +653,12 @@ public class SQLite_DBManager {
 
         try (PreparedStatement pstmt = conn.prepareStatement(query)) {
 
-            // Asignar valores a los placeholders en el SET
+            // Asigna valores a los placeholders en el SET
             for (int i = 0; i < values.length; i++) {
                 pstmt.setObject(i + 1, values[i]);
             }
 
-            // Asignar valores a los placeholders en el WHERE
+            // Asigna valores a los placeholders en el WHERE
             if (whereClauses != null && whereClauses.length > 0) {
                 for (int i = 0; i < whereClauses.length; i++) {
                     pstmt.setObject(values.length + i + 1, whereClauses[i][2]);

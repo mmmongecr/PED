@@ -1,28 +1,46 @@
 package data.InfoObjetcs;
 
+import data.Settings.App_Settings;
 import java.util.Date;
 
 public class Ticket {
 
-    private int ticketID, clientAge;
-    private String clientName, 
+    private int ticketID, clientAge, clientID;
+    private String clientName,
             procedureType, // Depósitos , Retiros, Cambio de divisas
             procedureStatus; // P = Atentido  |  NS = No antentido
     private Date creationTime, attentionTime;
     private char clientType; // P = Preferencial | A = Un solo tramite |B = MultiTramite | 
-    
-    
-    // El ticket number se reinicia cada d[ia
+    private App_Settings app_Settings;
 
-    public Ticket(int ticketID, int clientAge, String clientName, String procedureType, String procedureStatus, Date creationTime, Date attentionTime, char clientType) {
+    // El ticket number se reinicia cada d[ia
+    public Ticket(int ticketID, int clientAge, int clientID, String clientName, String procedureType, String procedureStatus, Date creationTime, Date attentionTime, char clientType, App_Settings app_Settings) {
         this.ticketID = ticketID;
         this.clientAge = clientAge;
+        this.clientID = clientID;
         this.clientName = clientName;
         this.procedureType = procedureType;
         this.procedureStatus = procedureStatus;
         this.creationTime = creationTime;
         this.attentionTime = attentionTime;
         this.clientType = clientType;
+        this.app_Settings = app_Settings;
+        app_Settings.getSql().insert(
+                app_Settings.getCurrentBank().getDbName(),
+                "Tickets",
+                new Object[][]{
+                    {"tID", ticketID},
+                    {"tClientName", clientName},
+                    {"tClientID", clientID},
+                    {"tClientAge", clientAge},
+                    {"tClientType", clientType},
+                    {"tCreationDate", creationTime},
+                    {"tAttentionDate", attentionTime},
+                    {"tProcedureType", procedureType},
+                    {"cCounterID", null},
+                    {"uCashierID", null}
+                }
+        );
     }
 
     public int getTicketID() {
@@ -104,7 +122,5 @@ public class Ticket {
         sb.append('}');
         return sb.toString();
     }
-
-    
 
 }

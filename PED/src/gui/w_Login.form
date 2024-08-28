@@ -124,7 +124,7 @@
                       <Component id="tf_Password" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="56" max="-2" attributes="0"/>
                       <Component id="btn_login" min="-2" pref="40" max="-2" attributes="0"/>
-                      <EmptySpace pref="94" max="32767" attributes="0"/>
+                      <EmptySpace pref="124" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -139,7 +139,7 @@
                   <Color blue="cc" green="cc" red="0" type="rgb"/>
                 </Property>
                 <Property name="horizontalAlignment" type="int" value="0"/>
-                <Property name="text" type="java.lang.String" value="&lt;html&gt;   &lt;div style=&quot;text-align: center; &quot;&gt;     &lt;p style=&quot;text-shadow: 2px 2px 4px #aaa;&quot;&gt;Bienvenido al banco ###&lt;/p&gt;     &lt;p style=&quot;text-shadow: 2px 2px 4px #aaa;&quot;&gt;Por favor inicie sesi&#xf3;n&lt;/p&gt;     &lt;p style=&quot;text-shadow: 2px 2px 4px #aaa;&quot;&gt;L&#xed;nea 3&lt;/p&gt;   &lt;/div&gt; &lt;/html&gt;&lt;br&gt;"/>
+                <Property name="text" type="java.lang.String" value="&lt;html&gt;   &lt;div style=&quot;text-align: center; &quot;&gt;     &lt;p style=&quot;text-shadow: 2px 2px 4px #aaa;&quot;&gt;Bienvenido al banco ###&lt;/p&gt;     &lt;p style=&quot;text-shadow: 2px 2px 4px #aaa;&quot;&gt;Por favor inicie sesi&#xf3;n&lt;/p&gt;   &lt;/div&gt; &lt;/html&gt;&lt;br&gt;"/>
                 <Property name="horizontalTextPosition" type="int" value="0"/>
               </Properties>
             </Component>

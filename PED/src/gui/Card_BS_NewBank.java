@@ -272,21 +272,18 @@ public class Card_BS_NewBank extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_newBankActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_newBankActionPerformed
-        
-        SQLite_DBManager connDBManager = new SQLite_DBManager();
-        
-        
+     
         if ( // Valida que los inputs sean correctos y no contengan SQL Injection
-                connDBManager.noSQLInjection(tf_bankName.getText())
+                parentFrame.getAppSettings().getSql().noSQLInjection(tf_bankName.getText())
                 && !cb_counters.getSelectedItem().equals("0")
                 && !cb_dispensers.getSelectedItem().equals("0")
-                && connDBManager.noSQLInjection(tf_adminName.getText())
-                && connDBManager.noSQLInjection(tf_password.getPWSD())
-                && connDBManager.noSQLInjection(tf_name.getText())
-                && connDBManager.noSQLInjection(tf_lastName.getText())) 
+                && parentFrame.getAppSettings().getSql().noSQLInjection(tf_adminName.getText())
+                && parentFrame.getAppSettings().getSql().noSQLInjection(tf_password.getPWSD())
+                && parentFrame.getAppSettings().getSql().noSQLInjection(tf_name.getText())
+                && parentFrame.getAppSettings().getSql().noSQLInjection(tf_lastName.getText())) 
         {
             // Si cumple los criterios crea una nueva DB
-            connDBManager.createNewDB(
+            parentFrame.getAppSettings().getSql().createNewDB(
                     new String[]{
                         tf_bankName.getText(),
                         cb_counters.getSelectedItem() + "",
