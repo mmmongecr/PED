@@ -10,6 +10,7 @@ import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Date;
+import java.util.List;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -43,7 +44,28 @@ public class W_Queues extends javax.swing.JFrame {
         repaint();
         revalidate();
         
+        int qtyCounters = appSettings.getCurrentBank().getbCounters();
+        System.out.println("\n\n\n\n\n\n\n\n");
         
+        
+        
+        for (int i = 0; i < qtyCounters; i++) {
+            List<String[]> tickets = appSettings.getCounter(i).getQueueInfo();
+            System.out.println("Caja " + (i+1));
+
+            if (tickets == null || tickets.isEmpty()) { // Verifica si tickets es null o está vacío
+                System.out.println("La caja está vacía");
+            } else {
+                for (int j = 0; j < tickets.size(); j++) {
+                    System.out.println(
+                            "Numero de tiquete : " + tickets.get(j)[0]
+                            + "\tTipo de tiquete : " + tickets.get(j)[1]
+                            + // Corrige el índice si es necesario
+                            "\tTipo de cliente: " + tickets.get(j)[2] + getName()
+                    );
+                }
+            }
+        }
         
     }
     
@@ -62,12 +84,11 @@ public class W_Queues extends javax.swing.JFrame {
         pnl_Main = new presets.CM_Panel();
         p_container = new javax.swing.JPanel();
         lbl_Title = new javax.swing.JLabel();
-        btn_createTicket = new presets.CM_Button();
-        btn_Queue = new presets.CM_Button();
-        btn_processTicket = new presets.CM_Button();
-        btn_reports = new presets.CM_Button();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        cM_ComboBox1 = new presets.CM_ComboBox();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Sistema de registro");
         setName("Login"); // NOI18N
         setResizable(false);
@@ -89,71 +110,40 @@ public class W_Queues extends javax.swing.JFrame {
         lbl_Title.setFont(new java.awt.Font("Candara", 1, 36)); // NOI18N
         lbl_Title.setForeground(new java.awt.Color(0, 204, 204));
         lbl_Title.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbl_Title.setText("Hola ###, ¿Que deseas hacer?");
+        lbl_Title.setText("Lista de espera");
         lbl_Title.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         lbl_Title.setPreferredSize(new java.awt.Dimension(500, 50));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridwidth = 3;
         p_container.add(lbl_Title, gridBagConstraints);
 
-        btn_createTicket.setForeground(new java.awt.Color(255, 255, 255));
-        btn_createTicket.setText("Dispensar tiquetes");
-        btn_createTicket.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        btn_createTicket.setMargin(new java.awt.Insets(10, 10, 10, 10));
-        btn_createTicket.setPreferredSize(new java.awt.Dimension(200, 100));
-        btn_createTicket.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_createTicketActionPerformed(evt);
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
             }
-        });
+        ));
+        jScrollPane1.setViewportView(jTable1);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridheight = 2;
+        p_container.add(jScrollPane1, gridBagConstraints);
+
+        cM_ComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Caja 1", "Caja 2", "Caja 3", "Caja 4", "Caja 5" }));
+        cM_ComboBox1.setMaximumSize(null);
+        cM_ComboBox1.setPreferredSize(new java.awt.Dimension(300, 100));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
-        gridBagConstraints.ipadx = 50;
-        gridBagConstraints.ipady = 50;
-        gridBagConstraints.insets = new java.awt.Insets(10, 10, 10, 10);
-        p_container.add(btn_createTicket, gridBagConstraints);
-
-        btn_Queue.setForeground(new java.awt.Color(255, 255, 255));
-        btn_Queue.setText("Ver cola de cajas");
-        btn_Queue.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        btn_Queue.setMargin(new java.awt.Insets(10, 10, 10, 10));
-        btn_Queue.setPreferredSize(new java.awt.Dimension(200, 100));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.ipadx = 50;
-        gridBagConstraints.ipady = 50;
-        gridBagConstraints.insets = new java.awt.Insets(10, 10, 10, 10);
-        p_container.add(btn_Queue, gridBagConstraints);
-
-        btn_processTicket.setForeground(new java.awt.Color(255, 255, 255));
-        btn_processTicket.setText("Tramitar tiquete");
-        btn_processTicket.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        btn_processTicket.setMargin(new java.awt.Insets(10, 10, 10, 10));
-        btn_processTicket.setPreferredSize(new java.awt.Dimension(200, 100));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.ipadx = 50;
-        gridBagConstraints.ipady = 50;
-        gridBagConstraints.insets = new java.awt.Insets(10, 10, 10, 10);
-        p_container.add(btn_processTicket, gridBagConstraints);
-
-        btn_reports.setForeground(new java.awt.Color(255, 255, 255));
-        btn_reports.setText("Reportes");
-        btn_reports.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        btn_reports.setMargin(new java.awt.Insets(10, 10, 10, 10));
-        btn_reports.setPreferredSize(new java.awt.Dimension(200, 100));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.ipadx = 50;
-        gridBagConstraints.ipady = 50;
-        gridBagConstraints.insets = new java.awt.Insets(10, 10, 10, 10);
-        p_container.add(btn_reports, gridBagConstraints);
+        p_container.add(cM_ComboBox1, gridBagConstraints);
 
         pnl_Main.add(p_container, java.awt.BorderLayout.CENTER);
 
@@ -162,17 +152,12 @@ public class W_Queues extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btn_createTicketActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_createTicketActionPerformed
-        W_Dispenser wp = new W_Dispenser(appSettings);
-    }//GEN-LAST:event_btn_createTicketActionPerformed
-
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private presets.CM_Button btn_Queue;
-    private presets.CM_Button btn_createTicket;
-    private presets.CM_Button btn_processTicket;
-    private presets.CM_Button btn_reports;
+    private presets.CM_ComboBox cM_ComboBox1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable1;
     private javax.swing.JLabel lbl_Title;
     private javax.swing.JPanel p_container;
     private presets.CM_Panel pnl_Main;

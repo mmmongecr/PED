@@ -36,40 +36,80 @@ public class Queue {
         return nodesQTY;
     }
 
-    // Agrega Tickets al queue ordenado por el ticketID
+    // Agrega Tickets al queue ordenado por el ticketID+
     public void joinQueue(Ticket newTicket) {
-        Node newNode = new Node(newTicket);
+    Node newNode = new Node(newTicket);
 
-        // Inicializa headNode y lastNode si la lista está vacía 
-        if (headNode == null) {
-            headNode = newNode;
-            lastNode = newNode; 
-            return;
-        }
-
-        // Si el nuevo ID es mayor que el ID en lastNode, se agrega al final
-        if (newTicket.getTicketID() > lastNode.getTicket().getTicketID()) {
-            lastNode.setNextNode(newNode); // El antiguo lastNode apunta al nuevo nodo
-            lastNode = newNode; // lastNode ahora es el nuevo nodo
-            return;
-        }
-
-        // Si el nuevo ID es menor que el ID en headNode, se agrega al principio
-        if (newTicket.getTicketID() < headNode.getTicket().getTicketID()) {
-            newNode.setNextNode(headNode); // El nuevo nodo apunta al antiguo headNode
-            headNode = newNode; // headNode ahora es el nuevo nodo
-            return;
-        }
-
-        // Inserción en la posición correcta dentro de la lista
-        Node current = headNode;
-        while (current.getNextNode() != headNode && current.getNextNode().getTicket().getTicketID() < newTicket.getTicketID()) {
-            current = current.getNextNode();
-        }
-        // Insertar el nuevo nodo en su posición
-        newNode.setNextNode(current.getNextNode());
-        current.setNextNode(newNode);
+    // Inicializa headNode y lastNode si la lista está vacía 
+    if (headNode == null) {
+        headNode = newNode;
+        lastNode = newNode; 
+        return;
     }
+
+    // Si el nuevo ID es mayor que el ID en lastNode, se agrega al final
+    if (newTicket.getTicketID() > lastNode.getTicket().getTicketID()) {
+        lastNode.setNextNode(newNode); // El antiguo lastNode apunta al nuevo nodo
+        lastNode = newNode; // lastNode ahora es el nuevo nodo
+        return;
+    }
+
+    // Si el nuevo ID es menor que el ID en headNode, se agrega al principio
+    if (newTicket.getTicketID() < headNode.getTicket().getTicketID()) {
+        newNode.setNextNode(headNode); // El nuevo nodo apunta al antiguo headNode
+        headNode = newNode; // headNode ahora es el nuevo nodo
+        return;
+    }
+
+    // Inserción en la posición correcta dentro de la lista
+    Node current = headNode;
+    while (current.getNextNode() != null && current.getNextNode().getTicket().getTicketID() < newTicket.getTicketID()) {
+        current = current.getNextNode();
+    }
+
+    // Insertar el nuevo nodo en su posición
+    newNode.setNextNode(current.getNextNode());
+    current.setNextNode(newNode);
+
+    // Actualizar lastNode si el nuevo nodo se inserta al final
+    if (newNode.getNextNode() == null) {
+        lastNode = newNode;
+    }
+}
+    
+//    public void joinQueue(Ticket newTicket) {
+//        Node newNode = new Node(newTicket);
+//
+//        // Inicializa headNode y lastNode si la lista está vacía 
+//        if (headNode == null) {
+//            headNode = newNode;
+//            lastNode = newNode; 
+//            return;
+//        }
+//
+//        // Si el nuevo ID es mayor que el ID en lastNode, se agrega al final
+//        if (newTicket.getTicketID() > lastNode.getTicket().getTicketID()) {
+//            lastNode.setNextNode(newNode); // El antiguo lastNode apunta al nuevo nodo
+//            lastNode = newNode; // lastNode ahora es el nuevo nodo
+//            return;
+//        }
+//
+//        // Si el nuevo ID es menor que el ID en headNode, se agrega al principio
+//        if (newTicket.getTicketID() < headNode.getTicket().getTicketID()) {
+//            newNode.setNextNode(headNode); // El nuevo nodo apunta al antiguo headNode
+//            headNode = newNode; // headNode ahora es el nuevo nodo
+//            return;
+//        }
+//
+//        // Inserción en la posición correcta dentro de la lista
+//        Node current = headNode;
+//        while (current.getNextNode() != headNode && current.getNextNode().getTicket().getTicketID() < newTicket.getTicketID()) {
+//            current = current.getNextNode();
+//        }
+//        // Insertar el nuevo nodo en su posición
+//        newNode.setNextNode(current.getNextNode());
+//        current.setNextNode(newNode);
+//    }
 
     // Método para encontrar un nodo en la cola basado en el ID del Ticket
     public Node findInQueue(int id, boolean needPrevNode) {

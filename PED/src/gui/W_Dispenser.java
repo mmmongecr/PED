@@ -222,7 +222,7 @@ public class W_Dispenser extends javax.swing.JFrame implements ActionListener{
         btn_OK = new presets.CM_Button();
         filler = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 32767));
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Sistema de registro");
         setName("Login"); // NOI18N
         setResizable(false);

@@ -123,6 +123,11 @@ public class W_Home extends javax.swing.JFrame {
         btn_Queue.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         btn_Queue.setMargin(new java.awt.Insets(10, 10, 10, 10));
         btn_Queue.setPreferredSize(new java.awt.Dimension(200, 100));
+        btn_Queue.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_QueueActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 1;
@@ -167,6 +172,10 @@ public class W_Home extends javax.swing.JFrame {
     private void btn_createTicketActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_createTicketActionPerformed
         W_Dispenser wp = new W_Dispenser(appSettings);
     }//GEN-LAST:event_btn_createTicketActionPerformed
+
+    private void btn_QueueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_QueueActionPerformed
+        W_Queues queues = new W_Queues(appSettings);
+    }//GEN-LAST:event_btn_QueueActionPerformed
 
     
 
